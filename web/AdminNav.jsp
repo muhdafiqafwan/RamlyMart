@@ -48,7 +48,7 @@
                     </li>
                     <li>
                         <a href="OrderController?action=listOrderAdmin">
-                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Order </a>
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Orders </a>
                     </li>
                     <li>
                         <a href="PaymentController?action=listPayment">
