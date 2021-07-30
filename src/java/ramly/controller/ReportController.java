@@ -1,6 +1,11 @@
 package ramly.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,16 +29,20 @@ public class ReportController extends HttpServlet {
         String action = request.getParameter("action");
         
         if (action.equalsIgnoreCase("viewReport")) {	
-            int month = Integer.parseInt(request.getParameter("month"));
-            String[] monthName = {"","January","February","March","April","May","June","July","August","September","October","November","December"}; 
+            String startDate = request.getParameter("start");
+            String endDate = request.getParameter("end"); 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+            try {
+                Date sD = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+                Date eD = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+                request.setAttribute("startDate", formatter.format(sD) );
+                request.setAttribute("endDate", formatter.format(eD) );
+            } catch (ParseException ex) {
+                Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
-            for(int i=1; i <= 12; i++) {
-                if(month == i) {
-                    request.setAttribute("monthName", monthName[i] );
-                }
-            }           
             forward = VIEW_REPORT;       		
-            request.setAttribute("order", daoOrder.getSales(month) );  
+            request.setAttribute("order", daoOrder.getSales(startDate,endDate) );  
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);

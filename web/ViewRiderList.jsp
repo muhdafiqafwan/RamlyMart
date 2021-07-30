@@ -95,8 +95,8 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <center>
-                                <form name="form1" method="post" id="ff" action="AssignRiderController">
-                                    <select name="filter">
+                                <form name="form1" onsubmit="setFilter()" method="post" id="ff" action="AssignRiderController">
+                                    <select id="filter" name="filter">
                                         <option>All</option>
                                         <option>Available</option>
                                         <option>Unavailable</option>
@@ -147,28 +147,25 @@
                                     });
                                 }
                                 
-                                $(function() {
-                                    var selectOptions;
-                                    if(localStorage.getItem("selectOptions")) {
-                                        selectOptions = JSON.parse(localStorage.getItem("selectOptions"));
-                                        Object.keys(selectOptions).forEach(function(select) {
-                                          $("select[name="+select+"]").val(selectOptions[select]);
-                                        });
-                                   } else {
-                                      selectOptions = {};
-                                   }
-                                   $("select").change(function() {
-                                        var $this =  $(this),
-                                            selectName = $this.attr("name");
-                                       selectOptions[selectName] = $this.val();
-                                       localStorage.setItem("selectOptions", JSON.stringify(selectOptions));
-                                     });
-
-                                 });
+                                function setFilter(){
+                                    var value = document.getElementById('filter').value;
+                                    localStorage.setItem("select", value); 
+                                }
+                                
+                                function getFilter(){
+                                    if (localStorage.getItem("select") != null) {// Check if there is selected date. 
+                                          return localStorage.getItem("select");
+                                    }
+                                    else {
+                                        return "All";
+                                    }
+                                }
+                                
+                                document.getElementById('filter').value = getFilter();
                                  
-                                 function resetFilter() {
-                                    localStorage.removeItem("selectOptions");
-                                  }
+                                function resetFilter() {
+                                   localStorage.removeItem("select");
+                                }
                             </script>
                         </div>
                         <!-- //first section -->

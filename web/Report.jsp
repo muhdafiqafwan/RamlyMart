@@ -18,7 +18,6 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui1.css">
 	<!-- fonts -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<style>
             .product-sec2 {
                 box-shadow: 0px 10px 15px 0px #D6D6D6;
@@ -38,6 +37,22 @@
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 resize: vertical;
+            }
+            input[type=date]{
+                width: 20%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            input[type=submit] {
+                background-color: #644334;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: center;
+                width: 20%;
             }
 	</style>
     </head>
@@ -66,29 +81,19 @@
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec2">                
-                            <form name="form1" method="post" id="ff" action="ReportController?action=viewReport" style="margin: 0; padding: 0;">        
+                            <form name="form1" method="post" onsubmit="setDate()" id="ff" action="ReportController?action=viewReport" style="margin: 0; padding: 0;">        
                                 <center>
-                                    <select id="month" name="month" required>
-                                        <option value="" disabled selected >Select Month</option>
-                                        <option value="01">January</option>
-                                        <option value="02">February</option>
-                                        <option value="03">March</option>
-                                        <option value="04">April</option>
-                                        <option value="05">May</option>
-                                        <option value="06">June</option>
-                                        <option value="07">July</option>
-                                        <option value="08">August</option>
-                                        <option value="09">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
-                                    <input type="submit" name="search" class="btn btn-primary" value="Select">
+                                <label for="start">Start date:</label>
+                                <input type="date" id="start" name="start" required>
+                                
+                                <label for="start" style="margin-left: 10px;">End date:</label>
+                                <input type="date" id="end" name="end" required>              
+                                <input style="margin-left: 10px;" type="submit" name="search" value="View">
                                 </center>
                                 <br><br>
                             </form>
                             <div id="printableArea">
-                                <h2 style="text-align: center;">Month: <c:out value="${requestScope.monthName}" /></h2>
+                                <h2 style="text-align: center;">Date: <c:out value="${requestScope.startDate}" /> - <c:out value="${requestScope.endDate}" /></h2>
                                 <br>
                                 <table class="timetable_pay">
                                     <thead>
@@ -129,28 +134,31 @@
                                     document.body.innerHTML = originalContents;
                                 }
                                 
-                                $(function() {
-                                    var selectOptions;
-                                    if(localStorage.getItem("selectOptions")) {
-                                        selectOptions = JSON.parse(localStorage.getItem("selectOptions"));
-                                        Object.keys(selectOptions).forEach(function(select) {
-                                          $("select[name="+select+"]").val(selectOptions[select]);
-                                        });
-                                   } else {
-                                      selectOptions = {};
-                                   }
-                                   $("select").change(function() {
-                                        var $this =  $(this),
-                                            selectName = $this.attr("name");
-                                       selectOptions[selectName] = $this.val();
-                                       localStorage.setItem("selectOptions", JSON.stringify(selectOptions));
-                                     });
-
-                                 });
+                                function setDate(){
+                                    var valueStart = document.getElementById('start').value;
+                                    var valueEnd = document.getElementById('end').value;
+                                    localStorage.setItem("selectStart", valueStart); 
+                                    localStorage.setItem("selectEnd", valueEnd); 
+                                }
+                                
+                                function getDateStart(){
+                                    if (localStorage.getItem("selectStart") != null) {// Check if there is selected date. 
+                                          return localStorage.getItem("selectStart");
+                                    }
+                                }
+                                function getDateEnd(){
+                                    if (localStorage.getItem("selectEnd") != null) {// Check if there is selected date. 
+                                          return localStorage.getItem("selectEnd");
+                                    }
+                                }
+                                
+                                document.getElementById('start').value = getDateStart();
+                                document.getElementById('end').value = getDateEnd();
                                  
-                                 function resetFilter() {
-                                    localStorage.removeItem("selectOptions");
-                                  }
+                                function resetFilter() {
+                                   localStorage.removeItem("selectStart");
+                                   localStorage.removeItem("selectEnd");
+                                }
                             </script>    
                         </div>
                         <!-- //first section -->

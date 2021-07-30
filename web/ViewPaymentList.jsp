@@ -78,7 +78,7 @@
             }
 	</style><!-- UPDATE 26/6/2021  -->
     </head>
-    <body>
+    <body onload="resetFilter()">
 	<!-- header-bot-->
         <%@ include file="AdminNav.jsp" %>
         <!-- //header-bot -->
@@ -104,8 +104,8 @@
                                 <table class="search-sec">
                                     <tr>
                                         <center>
-                                            <form method="post" action="PaymentController?action=searchItem">                              
-                                                <select name="search" >
+                                            <form method="post" onsubmit="setSearch()" action="PaymentController?action=searchItem">                              
+                                                <select id="search" name="search" >
                                                     <option>All</option>
                                                     <option>COD</option>
                                                     <option>ONLINE PAYMENT</option>
@@ -165,6 +165,27 @@
                                     </c:choose>
                                 </table>
                             </div>
+                            <script>
+                                function setSearch(){
+                                    var value = document.getElementById('search').value;
+                                    localStorage.setItem("select", value); 
+                                }
+                                
+                                function getSearch(){
+                                    if (localStorage.getItem("select") != null) {// Check if there is selected date. 
+                                          return localStorage.getItem("select");
+                                    }
+                                    else {
+                                        return "All";
+                                    }
+                                }
+                                
+                                document.getElementById('search').value = getSearch();
+                                 
+                                function resetFilter() {
+                                   localStorage.removeItem("select");
+                                }
+                            </script>
                         </div>
                         <!-- //first section -->
                     </div>

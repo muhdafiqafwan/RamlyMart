@@ -405,14 +405,15 @@ public class OrderDAO {
         }
         return orders;
     }
-       
-     public OrderDelivery getSales(int month) {
+     
+     public OrderDelivery getSales(String startDate, String endDate) {
             OrderDelivery  order = new OrderDelivery ();
 	    try {
 	    	currentCon = ConnectionManager.getConnection();
-	        ps=currentCon.prepareStatement("select SUM(ORDERTOTALPRICE) AS TOTALSALES, ROUND(AVG(ORDERTOTALPRICE),2) AS AVGTOTALSALES, COUNT(DISTINCT CUSTID) AS TOTALCUST, COUNT(ORDERID) AS TOTALORDER from ORDERDELIVERY where TO_CHAR(ORDERDELIVERYDATE , 'MM') = ?");
+	        ps=currentCon.prepareStatement("select SUM(ORDERTOTALPRICE) AS TOTALSALES, ROUND(AVG(ORDERTOTALPRICE),2) AS AVGTOTALSALES, COUNT(DISTINCT CUSTID) AS TOTALCUST, COUNT(ORDERID) AS TOTALORDER from ORDERDELIVERY where ORDERDELIVERYDATE between TO_DATE(?,'YYYY-MM-DD') and TO_DATE(?,'YYYY-MM-DD')");
                 
-	        ps.setInt(1, month);
+	        ps.setString(1, startDate);
+                ps.setString(2, endDate);
 	        ResultSet rs = ps.executeQuery();
 
 	        if (rs.next()) {
