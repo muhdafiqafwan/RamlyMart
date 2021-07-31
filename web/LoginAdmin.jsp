@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
     <head>
@@ -34,25 +35,29 @@
                 -webkit-appearance: none; 
                 margin: 0; 
             }
-            input[type=number], input[type=password]{
+            input[type=number], input[type=text], input[type=password]{
                 width: 90%;
                 padding: 12px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 resize: vertical;
             }
+            input[type=checkbox] {
+                margin: 12px 12px 12px 65px;
+            }
             input[type=reset], input[type=submit] {
-              background-color: #644334;
-              color: white;
-              padding: 12px 20px;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              float: center;
-              width: 20%;
+                font-weight: bold;
+                border: 3px solid #644334;
+                color: #644334;
+                padding: 12px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                float: center;
+                width: 20%;
             }
             input[type=reset]:hover, input[type=submit]:hover {
-              background-color: #462f25;
+                background-color: #644334;
+                color: #fff;
             }
 	</style>
     </head>
@@ -79,7 +84,6 @@
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Log In</h3>
                             <p align="center">Log In now, Let's start your work.</p>
-                            <p align="center"><span style="color:red"><%=(request.getAttribute("errMessage") == null) ? "" : request.getAttribute("errMessage")%></span></p>
                             <form name="form" onsubmit="showAlertSuccessfulLogin()" action="LoginController?action=loginAdmin" method="post">
                                 <div class="row">
                                     <div class="col-25">
@@ -87,7 +91,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="number" id="adminID" name="adminID" min="0" required>
+                                            <input type="text" id="adminID" name="adminID" pattern="\d*" maxlength="3" required>
                                         </div>
                                     </center>
                                 </div>						  
@@ -97,28 +101,72 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="adminPassword" name="adminPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required> 
+                                            <input type="password" id="adminPassword" name="adminPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                         </div>    
                                     </center>
                                 </div>
                                 <div class="row">
+                                    <input type="checkbox" onclick="showPassword()">Show Password
                                     <br>
                                 </div>
                                 <div class="row" align="center">
                                       <br>
-                                     <input type="reset" value="Reset"></input>   <input type="submit" value="Login"></input>
+                                     <input type="reset" value="Reset">   <input type="submit" value="Login" onclick="formValidation()">
                                 </div>  
                             </form>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script>
-                                function showAlertSuccessfulLogin() {
+                            <c:set var="message" value="${requestScope.error}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
                                     Swal.fire({
-                                            position: 'top-center',
-                                            icon: 'success',
-                                            title: ' successfully Login',
-                                            showConfirmButton: false,
-                                            timer: 4500
+                                        position: 'top-center',
+                                        icon: 'error',
+                                        title: 'User Not Found!',
+                                        text: 'Please try again',
+                                        showConfirmButton: true,
+                                        timer: 4500
                                     });
+                                </script>
+                            </c:if>
+                            <script>
+                                function formValidation() {
+                                    var id = document.getElementById("adminID");
+                                    var idValidity = id.validity;
+                                    var password = document.getElementById("adminPassword");
+                                    var passwordValidity = password.validity;
+
+                                    if(idValidity.valueMissing) {
+                                        id.setCustomValidity('Please fill out this field!');
+                                    }
+                                    else if(idValidity.patternMismatch) {
+                                        id.setCustomValidity('Must be digits only!');
+                                    }
+                                    else {
+                                        id.setCustomValidity('');
+                                    }
+                                    
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity('Please fill out this field!');
+                                    } 
+                                    else if (passwordValidity.patternMismatch) {
+                                        password.setCustomValidity('Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!'); 
+                                    } 
+                                    else {
+                                        password.setCustomValidity('');
+                                    }
+                                    
+                                    id.reportValidity();
+                                    password.reportValidity();
+                                }
+                                function showPassword() {
+                                    var password = document.getElementById("adminPassword");
+
+                                    if(password.type === "password") {
+                                        password.type = "text";
+                                    }
+                                    else {
+                                        password.type = "password";
+                                    }
                                 }
                             </script>
                         </div>

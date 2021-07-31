@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
     <head>
@@ -24,32 +25,39 @@
                 margin-bottom: 14px;
             }
             * {
-              box-sizing: border-box;
-            }
-            input[type=text], input[type=password]{
-              width: 90%;
-              padding: 12px;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              resize: vertical;
+                box-sizing: border-box;
             }
             label {
-              padding: 12px 12px 12px 60px;
-              display: inline-block;
+                padding: 12px 12px 12px 60px;
+                display: inline-block;
+            }
+            input[type=text], input[type=password]{
+                width: 90%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
+            }
+            input[type=checkbox] {
+                margin: 12px 12px 12px 65px;
             }
             input[type=reset], input[type=submit] {
-              background-color: #644334;
-              color: white;
-              padding: 12px 20px;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              float: center;
-              width: 20%;
+                font-weight: bold;
+                border: 3px solid #644334;
+                color: #644334;
+                padding: 12px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                float: center;
+                width: 20%;
             }
             input[type=reset]:hover, input[type=submit]:hover {
-              background-color: #462f25;
+                background-color: #644334;
+                color: #fff;
             }
+            a:hover {
+                text-decoration: underline;
+              }
         </style>
     </head>
     <body>
@@ -74,9 +82,9 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Log In </h3>
-                            <p align="center">Don't have an account?<a href="RegisterCustomer.jsp"> Register Now</a></p>
-                            <p align="center"><span style="color:red"><%=(request.getAttribute("errMessage") == null) ? "" : request.getAttribute("errMessage")%></span></p>
-                            <p align="center"><span style="color:green"><%=(request.getAttribute("success") == null) ? "" : request.getAttribute("success")%></span></p>
+                            <p align="center">Don't have an account?
+                                <b><a href="RegisterCustomer.jsp"> Click here to register</a></b>
+                            </p>
                             <form name="form" onsubmit="showAlertSuccessfulLogin()" action="LoginController?action=loginCustomer" method="post">				  
                                 <div class="row">
                                     <div class="col-25">
@@ -84,7 +92,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custUsername" name="custUsername" required>
+                                            <input type="text" id="custUsername" name="custUsername" pattern="[A-Za-z]+"required>
                                         </div>
                                     </center>
                                 </div> 
@@ -99,23 +107,81 @@
                                     </center>
                                 </div>                    
                                 <div class="row">
+                                    <input type="checkbox" onclick="showPassword()">Show Password
                                     <br>
                                 </div>
                                 <div class="row" align="center">
                                     <br>
-                                    <input type="reset" value="Reset"></input>   <input type="submit" value="Login"></input>
+                                    <input type="reset" value="Reset">   <input type="submit" value="Login" onclick="formValidation()">
                                 </div>
                             </form>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script>
-                                function showAlertSuccessfulLogin() {
+                            <c:set var="message" value="${requestScope.error}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'error',
+                                        title: 'User Not Found!',
+                                        text: 'Please try again',
+                                        showConfirmButton: true,
+                                        timer: 4500
+                                    });
+                                </script>
+                            </c:if>
+                            <c:set var="message" value="${requestScope.success}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
                                     Swal.fire({
                                         position: 'top-center',
                                         icon: 'success',
-                                        title: ' successfully Login',
-                                        showConfirmButton: false,
+                                        title: 'Register Successful',
+                                        text: 'You can now login into the system',
+                                        showConfirmButton: true,
                                         timer: 4500
                                     });
+                                </script>
+                            </c:if>
+                            <script>
+                                function formValidation() {
+                                    var username = document.getElementById("custUsername");
+                                    var usernameValidity = username.validity;
+                                    var password = document.getElementById("custPassword");
+                                    var passwordValidity = password.validity;
+
+                                    if(usernameValidity.valueMissing) {
+                                        username.setCustomValidity('Please fill out this field!');
+                                    }
+                                    else if(usernameValidity.patternMismatch) {
+                                        username.setCustomValidity('Must be letters only!')
+                                    }
+                                    else {
+                                        username.setCustomValidity('');
+                                    }
+                                    
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity('Please fill out this field!');
+                                    } 
+                                    else if(passwordValidity.patternMismatch) {
+                                        password.setCustomValidity('Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!');
+                                    } 
+                                    else {
+                                        password.setCustomValidity('');
+                                    }
+                                    
+                                    username.reportValidity();
+                                    password.reportValidity();
+                                }
+                                function showPassword() {
+                                    var password = document.getElementById("custPassword");
+
+                                    if(password.type === "password") {
+                                        password.type = "text";
+                                    }
+                                    else {
+                                        password.type = "password";
+                                    }
                                 }
                             </script>
                         </div>

@@ -27,10 +27,10 @@
                 box-sizing: border-box;
             }
             label {
-              padding: 12px 12px 12px 60px;
-              display: inline-block;
+                padding: 12px 12px 12px 60px;
+                display: inline-block;
             }
-            input[type=text], input[type=password], input[type=email]{
+            input[type=text], input[type=password], input[type=email], input[type=number]{
                 width: 90%;
                 padding: 12px;
                 border: 1px solid #ccc;
@@ -41,17 +41,21 @@
                 margin: 0px 12px 12px 65px;
             }
             input[type=reset], input[type=submit] {
-              background-color: #644334;
-              color: white;
-              padding: 12px 20px;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              float: center;
-              width: 20%;
+                font-weight: bold;
+                border: 3px solid #644334;
+                color: #644334;
+                padding: 12px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                float: center;
+                width: 20%;
             }
             input[type=reset]:hover, input[type=submit]:hover {
-              background-color: #462f25;
+                background-color: #644334;
+                color: #fff;
+            }
+            a:hover {
+                text-decoration: underline;
             }
 	</style>
     </head>
@@ -77,7 +81,9 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Registration </h3>
-                            <p align="center">Let's join Ramly Family now!<br>Already have an account?<a href="Login_Customer.jsp">Log In Here</a></p>
+                            <p align="center">Let's join Ramly Family now!
+                                <br>Already have an account?<b><a href="LoginCustomer.jsp"> Log In Here</a></b>
+                            </p>
                             <p align="center"><span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span></p>
                             <form name="form1" method="post" id="ff"  action="CustomerController?action=registerCustomer">
                                 <div class="row">
@@ -86,8 +92,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="custName" id="custName" pattern="^[a-zA-Z]{2,}(?: [a-zA-Z-@']+){0,}$" title="Cannot starts with numbers and symbols. Must contains atleast 2 characters. Cannot contain numbers and symbols except: @ - ' " required>
-                                            
+                                            <input type="text" id="custName" name="custName" pattern="[a-zA-Z ]+" required>
                                         </div>
                                     </center>
                                 </div>
@@ -98,7 +103,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="custPhone" id="custPhone" placeholder="Example: 012-3456789" pattern="[0-9]{3}-[0-9]{7}" required>
+                                            <input type="text" id="custPhone" name="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" required>
                                         </div>
                                     </center>
                                 </div>
@@ -109,7 +114,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="custEmail" id="custEmail" placeholder="Example: abuali@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                                            <input type="text" id="custEmail" name="custEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" required>
                                         </div>
                                     </center>
                                 </div>
@@ -120,7 +125,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="custAddress" id="custAddress">
+                                            <input type="text" id="custAddress" name="custAddress" required>
                                       </div>
                                     </center>
                                 </div><br>
@@ -130,7 +135,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="custUsername" id="custUsername" required>
+                                            <input type="text" id="custUsername" name="custUsername" pattern="[A-Za-z]+" required>
                                       </div>
                                     </center>
                                 </div>
@@ -141,7 +146,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" name="custPassword" id="custPassword" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
+                                            <input type="password" id="custPassword1" name="custPassword1"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                             <br>
                                             <span id = "message" style="color:red"> </span> 
                                         </div>
@@ -154,7 +159,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" name="custPassword1" id="custPassword1" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
+                                            <input type="password" id="custPassword2" name="custPassword2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                             <br>
                                             <span id = "messageMatch" style="color:red"> </span> <br>
                                         </div>
@@ -166,13 +171,13 @@
                                 </div>
                                 <div class="row" align="center">
                                     <br>
-                                    <input type="reset" value="Reset"></input>   <input type="submit" onclick="return showFormValidation()" value="Register" ></input>
+                                    <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="return showFormValidation()">
                                 </div>
                             </form>
-                            <script>  
+                            <script>
                                 function showFormValidation() {  
-                                    var pw1 = document.getElementById("custPassword").value;  
-                                    var pw2 = document.getElementById("custPassword1").value;  
+                                    var pw1 = document.getElementById("custPassword1").value;  
+                                    var pw2 = document.getElementById("custPassword2").value;  
 
                                     if(pw1 !== pw2)  {   
                                        document.getElementById("messageMatch").innerHTML = "**Password did not match";
@@ -181,8 +186,8 @@
                                     return true;
                                 }
                                 function showPassword() {
-                                    var x = document.getElementById("custPassword");
-                                    var y = document.getElementById("custPassword1");
+                                    var x = document.getElementById("custPassword1");
+                                    var y = document.getElementById("custPassword2");
 
                                     if(x.type === "password") {
                                         x.type = "text";

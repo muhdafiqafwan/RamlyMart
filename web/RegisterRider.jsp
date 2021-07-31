@@ -41,17 +41,21 @@
                 margin: 0px 12px 12px 65px;
             }
             input[type=reset], input[type=submit] {
-                background-color: #644334;
-                color: white;
+                font-weight: bold;
+                border: 3px solid #644334;
+                color: #644334;
                 padding: 12px 20px;
-                border: none;
                 border-radius: 4px;
                 cursor: pointer;
                 float: center;
                 width: 20%;
             }
             input[type=reset]:hover, input[type=submit]:hover {
-                background-color: #462f25;
+                background-color: #644334;
+                color: #fff;
+            }
+            a:hover {
+                text-decoration: underline;
             }
 	</style>
     </head> 
@@ -77,7 +81,9 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Registration </h3>
-                            <p align="center">Let's join Ramly Family now! Already have an account?<a href="LoginRider.jsp">Log In Here</a></p>
+                            <p align="center">Let's join Ramly Family now! 
+                                <br>Already have an account?<b><a href="LoginRider.jsp"> Log In Here</a></b>
+                            </p>
                             <p align="center"><span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span></p>
                             <form name="form1" method="post" id="ff" action="RiderController?action=registerRider" >
                                 <div class="row">
@@ -86,7 +92,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="riderName" name="riderName" required>
+                                            <input type="text" id="riderName" name="riderName" pattern="[a-zA-Z ]+" required>
                                         </div>
                                     </center>
                                 </div>
@@ -130,7 +136,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="riderPassword" name="riderPassword" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
+                                            <input type="password" id="riderPassword1" name="riderPassword1" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                             <br>
                                             <span id="message" style="color:red"></span> 
                                             <input type="text" name="riderStatus" id="riderStatus" value="Available" hidden/>  
@@ -144,7 +150,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="riderPassword1" name="riderPassword1" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
+                                            <input type="password" id="riderPassword2" name="riderPassword2" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                             <br>
                                             <span id="messageMatch" style="color:red"></span> 
                                         </div>
@@ -162,8 +168,8 @@
                             </form>
                             <script>  
                                 function showFormValidation() {  
-                                    var pw1 = document.getElementById("riderPassword").value;  
-                                    var pw2 = document.getElementById("riderPassword1").value;  
+                                    var pw1 = document.getElementById("riderPassword1").value;  
+                                    var pw2 = document.getElementById("riderPassword2").value;  
 
                                     if(pw1 !== pw2)  {   
                                        document.getElementById("messageMatch").innerHTML = "**Password did not match";
@@ -172,8 +178,8 @@
                                     return true;
                                 }
                                 function showPassword() {
-                                    var x = document.getElementById("riderPassword");
-                                    var y = document.getElementById("riderPassword1");
+                                    var x = document.getElementById("riderPassword1");
+                                    var y = document.getElementById("riderPassword2");
 
                                     if(x.type === "password") {
                                         x.type = "text";

@@ -33,10 +33,12 @@ public class LoginController extends HttpServlet {
                 if(customer != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", customer);
-                    response.sendRedirect("HomepageCustomer.jsp");
+                    request.setAttribute("in","Successfully Login");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageCustomer.jsp");
+                    requestDispatcher.forward(request, response);
                 }
                 else {
-                    request.setAttribute("errMessage", "User not found. Please try again.");
+                    request.setAttribute("error", "User not found! Please try again");
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginCustomer.jsp");
                     requestDispatcher.forward(request, response);
                 }
@@ -52,10 +54,12 @@ public class LoginController extends HttpServlet {
                 if(rider != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", rider);
-                    response.sendRedirect("HomepageRider.jsp");
+                    request.setAttribute("in","Successfully Login");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageRider.jsp");
+                    requestDispatcher.forward(request, response);
                 }
                 else {
-                    request.setAttribute("errMessage", "User not found. Please try again.");
+                    request.setAttribute("error", "User not found! Please try again");
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginRider.jsp");
                     requestDispatcher.forward(request, response);
                 }
@@ -71,10 +75,12 @@ public class LoginController extends HttpServlet {
                 if(admin != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", admin);
-                    response.sendRedirect("HomepageAdmin.jsp");
+                    request.setAttribute("in","Successfully Login");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageAdmin.jsp");
+                    requestDispatcher.forward(request, response);
                 }
                 else {
-                    request.setAttribute("errMessage", "User not found. Please try again.");
+                    request.setAttribute("error", "User not found! Please try again");
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAdmin.jsp");
                     requestDispatcher.forward(request, response);
                 }

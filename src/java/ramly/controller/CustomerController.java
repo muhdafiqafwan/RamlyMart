@@ -126,7 +126,7 @@ public class CustomerController extends HttpServlet {
             String custName = request.getParameter("custName");
             String custPhone = request.getParameter("custPhone");
             String custEmail = request.getParameter("custEmail");
-            String custPassword = request.getParameter("custPassword");
+            String custPassword = request.getParameter("custPassword1");
             String custAddress = request.getParameter("custAddress");
             Customer customer = new Customer(custUsername, custName, custPhone, custEmail, custPassword, custAddress);		
             customer = daoCustomer.getCustomer(customer);

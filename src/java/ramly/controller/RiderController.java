@@ -106,7 +106,7 @@ public class RiderController extends HttpServlet {
             String riderName = request.getParameter("riderName");
             String riderPhone = request.getParameter("riderPhone");
             String riderEmail = request.getParameter("riderEmail");
-            String riderPassword = request.getParameter("riderPassword");
+            String riderPassword = request.getParameter("riderPassword1");
             String riderStatus= request.getParameter("riderStatus");
             String riderPlate= request.getParameter("riderPlate");
             Rider rider = new Rider(riderName, riderPhone, riderEmail, riderPassword, riderStatus, riderPlate);	

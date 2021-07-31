@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
     <head>
@@ -58,7 +59,20 @@
                                     <img src="images/admin.png">
                                     <p>Let's get some work done!</p>
                                 </div>
-                            </center>	
+                            </center>
+                            <c:set var="message" value="${requestScope.in}"/> 
+                            <c:if test="${message != null}">    
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Login',
+                                        showConfirmButton: false,
+                                        timer: 4500
+                                    });
+                                </script>
+                            </c:if>
                         </div>
                         <!-- //first section -->
                     </div>
