@@ -84,7 +84,7 @@
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Log In</h3>
                             <p align="center">Log In now, Let's start your work.</p>
-                            <form name="form" onsubmit="showAlertSuccessfulLogin()" action="LoginController?action=loginAdmin" method="post">
+                            <form name="form" action="LoginController?action=loginAdmin" method="post">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Identification Number</label>

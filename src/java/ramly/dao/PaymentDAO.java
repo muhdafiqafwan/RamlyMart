@@ -556,7 +556,7 @@ public class PaymentDAO {
         try {
             currentCon = ConnectionManager.getConnection();
             stmt = currentCon.createStatement();
-            String sql = "select p.*, o.ORDERID from PAYMENT p join ORDERDELIVERY o on p.PAYID = o.PAYID WHERE PAYSTATUS = '"+search+"' order by orderID ASC";
+            String sql = "select p.*, o.ORDERID from PAYMENT p join ORDERDELIVERY o on p.PAYID = o.PAYID WHERE PAYSTATUS = '"+search.toUpperCase()+"' order by orderID ASC";
             rs = stmt.executeQuery(sql);
              
             while (rs.next()) 
@@ -583,7 +583,7 @@ public class PaymentDAO {
         try {
             currentCon = ConnectionManager.getConnection();
             stmt = currentCon.createStatement();
-            String sql = "select p.*, o.ORDERID from PAYMENT p join ORDERDELIVERY o on p.PAYID = o.PAYID WHERE PAYTYPE = '" + search + "' order by orderID ASC";
+            String sql = "select p.*, o.ORDERID from PAYMENT p join ORDERDELIVERY o on p.PAYID = o.PAYID WHERE PAYTYPE = '" + search.toUpperCase() + "' order by orderID ASC";
             rs = stmt.executeQuery(sql);
              
             while (rs.next()) 
