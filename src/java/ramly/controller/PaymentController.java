@@ -104,19 +104,19 @@ public class PaymentController extends HttpServlet {
             request.setAttribute("payments", daoPayment.getPaymentByOrderID(searchorder));
         }
         else if(action.equalsIgnoreCase("filterItem")) { //SEARCH FOR ITEM
-            String search = request.getParameter("filter");
+            String filter = request.getParameter("filter");
             
-            if(search.equalsIgnoreCase("All")) { //ADMIN VIEWS ALL LIST PAYMENT 
+            if(filter.equalsIgnoreCase("All")) { //ADMIN VIEWS ALL LIST PAYMENT 
                 forward = SEARCH_PAYMENT;
                 request.setAttribute("payments", daoPayment.getAllPayment());
             }
-            else if(search.equalsIgnoreCase("unpaid") || search.equalsIgnoreCase("paid")) {
+            else if(filter.equalsIgnoreCase("unpaid") || filter.equalsIgnoreCase("paid")) {
                 forward = SEARCH_PAYMENT;
-                request.setAttribute("payments", daoPayment.getPaymentByStatus(search));
+                request.setAttribute("payments", daoPayment.getPaymentByStatus(filter));
             } 
-            else if(search.equalsIgnoreCase("cod") || search.equalsIgnoreCase("online payment")) {
+            else if(filter.equalsIgnoreCase("cod") || filter.equalsIgnoreCase("online payment")) {
                 forward = SEARCH_PAYMENT;
-                request.setAttribute("payments", daoPayment.getPaymentByType(search));
+                request.setAttribute("payments", daoPayment.getPaymentByType(filter));
             }
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);

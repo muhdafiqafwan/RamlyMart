@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
     <head>
@@ -28,6 +29,10 @@
             }
             label {
                 padding: 12px 12px 12px 60px;
+                display: inline-block;
+            }
+            small {
+                padding: 0px 12px 12px 60px;
                 display: inline-block;
             }
             input[type=text], input[type=password], input[type=email]{
@@ -84,8 +89,7 @@
                             <p align="center">Let's join Ramly Family now! 
                                 <br>Already have an account?<b><a href="LoginRider.jsp"> Log In Here</a></b>
                             </p>
-                            <p align="center"><span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span></p>
-                            <form name="form1" method="post" id="ff" action="RiderController?action=registerRider" >
+                            <form id="ff" name="form1" method="post" action="RiderController?action=registerRider" onsubmit="return passwordComparison()">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Name</label>
@@ -100,10 +104,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">No. Phone</label>
+                                        <br>
+                                        <small>Example: "012-3456789"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="riderPhone" name="riderPhone" placeholder="Example: 012-3456789" pattern="[0-9]{3}-[0-9]{7}" required>
+                                            <input type="text" id="riderPhone" name="riderPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" required>
                                         </div>
                                     </center>
                                 </div>
@@ -111,10 +117,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Email</label>
+                                        <br>
+                                        <small>Example: "aliabu@gmail.com"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="email" id="riderEmail" name="riderEmail" placeholder="Example: abuali@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                                            <input type="text" id="riderEmail" name="riderEmail" pattern="[a-z0-9._%+-]+@gmail.com" required>
                                         </div>
                                     </center>
                                 </div>
@@ -122,10 +130,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="plate">Plate Number</label>
+                                        <br>
+                                        <small>Example: "ABC1234 or AB1234C"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="riderPlate" name="riderPlate" placeholder="Your plate number (e.g. TAC123)" required="required">
+                                            <input type="text" id="riderPlate" name="riderPlate" pattern="^([A-Z]{3}[0-9]{4})?([A-Z]{2}[0-9]{4}[A-Z]{1})?$" minlength="7" maxlength="7" required>
                                         </div>
                                     </center>
                                 </div>
@@ -133,12 +143,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Password</label>
+                                        <br>
+                                        <small>Example: "Aliabu123"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="riderPassword1" name="riderPassword1" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
-                                            <br>
-                                            <span id="message" style="color:red"></span> 
+                                            <input type="password" id="riderPassword1" name="riderPassword1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
                                             <input type="text" name="riderStatus" id="riderStatus" value="Available" hidden/>  
                                         </div>
                                     </center>
@@ -150,9 +160,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="riderPassword2" name="riderPassword2" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
-                                            <br>
-                                            <span id="messageMatch" style="color:red"></span> 
+                                            <input type="password" id="riderPassword2" name="riderPassword2" required>
                                         </div>
                                     </center>
                                 </div>
@@ -163,36 +171,139 @@
                                 </div>
                                 <div class="row" align="center">
                                     <br>
-                                    <input type="reset" value="Reset"></input>   <input type="submit" onclick="return showFormValidation()" value="Register" ></input>
+                                    <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="formValidation()">
                                 </div>                               
                             </form>
+                            <c:set var="message" value="${requestScope.fail}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'error',
+                                        title: 'Email/Plate Number Has Been Used!',
+                                        text: 'Please try another email or plate number',
+                                        showConfirmButton: true,
+                                        timer: 4500
+                                    });
+                                </script>
+                            </c:if>
+                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>  
-                                function showFormValidation() {  
-                                    var pw1 = document.getElementById("riderPassword1").value;  
-                                    var pw2 = document.getElementById("riderPassword2").value;  
+                                function formValidation() {
+                                    var name = document.getElementById("riderName");
+                                    var nameValidity = name.validity;
+                                    var phone = document.getElementById("riderPhone");
+                                    var phoneValidity = phone.validity;
+                                    var email = document.getElementById("riderEmail");
+                                    var emailValidity = email.validity;
+                                    var plateNumber = document.getElementById("riderPlate");
+                                    var plateNumberValidity = plateNumber.validity;
+                                    var password = document.getElementById("riderPassword1");
+                                    var passwordValidity = password.validity;
 
-                                    if(pw1 !== pw2)  {   
-                                       document.getElementById("messageMatch").innerHTML = "**Password did not match";
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+                                    
+                                    if(phoneValidity.valueMissing) {
+                                        phone.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(phoneValidity.patternMismatch) {
+                                        phone.setCustomValidity("Must be digits only and please use the correct format! Example: xxx-xxxxxxx ");
+                                    }
+                                    else if(phoneValidity.tooLong) {
+                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
+                                    }
+                                    else if(phoneValidity.tooShort) {
+                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
+                                    }
+                                    else {
+                                        phone.setCustomValidity("");
+                                    }
+                                    
+                                    if(emailValidity.valueMissing) {
+                                        email.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(emailValidity.patternMismatch) {
+                                        email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
+                                    }
+                                    else {
+                                        email.setCustomValidity('');
+                                    }
+                                                                  
+                                    if(plateNumberValidity.valueMissing) {
+                                        plateNumber.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(plateNumberValidity.patternMismatch) {
+                                        plateNumber.setCustomValidity("Must contain 3 uppercase letters, 4 digits and no spacing!");
+                                    }
+                                    else if(plateNumberValidity.tooLong) {
+                                        plateNumber.setCustomeValidity("Plate number entered exceeds 7 digits!");
+                                    }
+                                    else if(plateNumberValidity.tooShort) {
+                                        plateNumber.setCustomeValidity("Plate number entered subceeds 7 digits!");
+                                    }
+                                    else {
+                                        plateNumber.setCustomValidity("");
+                                    }
+                                    
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity("Please fill out this field!");
+                                    } 
+                                    else if(passwordValidity.patternMismatch) {
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
+                                    }
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
+                                    }
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
+                                    name.reportValidity();
+                                    phone.reportValidity();
+                                    email.reportValidity();
+                                    plateNumber.reportValidity();
+                                    password.reportValidity();
+                                }
+                                function passwordComparison() {  
+                                    var password1 = document.getElementById("riderPassword1").value;  
+                                    var password2 = document.getElementById("riderPassword2").value;  
+
+                                    if(password1 !== password2)  {   
+                                         Swal.fire({
+                                            position: 'top-center',
+                                            icon: 'error',
+                                            title: 'Password Did Not Match!',
+                                            showConfirmButton: true,
+                                            timer: 4500
+                                        });
                                        return false; 
                                     }
                                     return true;
                                 }
                                 function showPassword() {
-                                    var x = document.getElementById("riderPassword1");
-                                    var y = document.getElementById("riderPassword2");
+                                    var password1 = document.getElementById("riderPassword1");
+                                    var password2 = document.getElementById("riderPassword2");
 
-                                    if(x.type === "password") {
-                                        x.type = "text";
+                                    if(password1.type === "password") {
+                                        password1.type = "text";
                                     }
                                     else {
-                                        x.type = "password";
+                                        password1.type = "password";
                                     }
                                     
-                                    if(y.type === "password") {
-                                        y.type = "text";
+                                    if(password2.type === "password") {
+                                        password2.type = "text";
                                     }
                                     else {
-                                        y.type = "password";
+                                        password2.type = "password";
                                     }
                                 }
                             </script>  

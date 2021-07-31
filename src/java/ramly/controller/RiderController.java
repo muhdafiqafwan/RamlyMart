@@ -81,7 +81,28 @@ public class RiderController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if(action.equalsIgnoreCase("updateRider")) { //RIDER UPDATES PROFILE
+        if(action.equalsIgnoreCase("registerRider")) { //RIDER REGISTERS ACCOUNT
+            String riderName = request.getParameter("riderName");
+            String riderPhone = request.getParameter("riderPhone");
+            String riderEmail = request.getParameter("riderEmail");
+            String riderPassword = request.getParameter("riderPassword1");
+            String riderStatus= request.getParameter("riderStatus");
+            String riderPlate= request.getParameter("riderPlate");
+            Rider rider = new Rider(riderName, riderPhone, riderEmail, riderPassword, riderStatus, riderPlate);	
+            rider = daoRider.getRider(rider);
+
+            if(!rider.isValid()) {
+                daoRider.add(rider);
+                forward = LOGIN_RIDER;
+                request.setAttribute("success", "Register Successful");
+            }
+            else {
+                daoRider.updateRider(rider);		
+                forward = REGISTER_RIDER;
+                request.setAttribute("fail", "Email/Plate Number Has Been Used");
+            }
+        }
+        else if(action.equalsIgnoreCase("updateRider")) { //RIDER UPDATES PROFILE
             int riderID = Integer.parseInt(request.getParameter("riderID"));
             String riderName = request.getParameter("riderName");
             String riderPhone = request.getParameter("riderPhone");
@@ -101,27 +122,6 @@ public class RiderController extends HttpServlet {
             session.setAttribute("login", rider);
             forward = VIEW_RIDER;
             request.setAttribute("rider", rider); 
-        }
-        else if(action.equalsIgnoreCase("registerRider")) { //RIDER REGISTERS ACCOUNT
-            String riderName = request.getParameter("riderName");
-            String riderPhone = request.getParameter("riderPhone");
-            String riderEmail = request.getParameter("riderEmail");
-            String riderPassword = request.getParameter("riderPassword1");
-            String riderStatus= request.getParameter("riderStatus");
-            String riderPlate= request.getParameter("riderPlate");
-            Rider rider = new Rider(riderName, riderPhone, riderEmail, riderPassword, riderStatus, riderPlate);	
-            rider = daoRider.getRider(rider);
-
-            if(!rider.isValid()) {
-                daoRider.add(rider);
-                forward = LOGIN_RIDER;
-                request.setAttribute("success", "Register successful! Please contact Ramly Management to verify and get your ID number to login to the system. Thank you!");
-            }
-            else {
-                daoRider.updateRider(rider);		
-                forward = REGISTER_RIDER;
-                request.setAttribute("error", "Email address or plate number you entered have been used! Please try another email address or plate number");
-            }
         }
         else if(action.equalsIgnoreCase("manageStatus")) { //RIDER MANAGES STATUS
             int riderID = Integer.parseInt(request.getParameter("riderID"));

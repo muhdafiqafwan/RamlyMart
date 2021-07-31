@@ -89,7 +89,7 @@
                             <p align="center">Don't have an account?
                                 <b><a href="RegisterRider.jsp"> Click here to register</a></b>
                             </p>
-                            <form name="form" onsubmit="showAlertSuccessfulLogin()" action="LoginController?action=loginRider" method="post">
+                            <form name="form" method="post" action="LoginController?action=loginRider">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Identification Number</label>
@@ -140,8 +140,8 @@
                                     Swal.fire({
                                         position: 'top-center',
                                         icon: 'success',
-                                        title: 'Register Successful!',
-                                        text: 'Please contact Ramly Management to verify and get your ID number to login into the system',
+                                        title: 'Register Successful',
+                                        text: 'Please contact Ramly management to obtain rider ID',
                                         showConfirmButton: true,
                                         timer: 4500
                                     });
@@ -155,25 +155,27 @@
                                     var passwordValidity = password.validity;
 
                                     if(idValidity.valueMissing) {
-                                        id.setCustomValidity('Please fill out this field!');
+                                        id.setCustomValidity("Please fill out this field!");
                                     }
                                     else if(idValidity.patternMismatch) {
-                                        id.setCustomValidity('Must be digits only!');
+                                        id.setCustomValidity("Must be digits only!");
                                     }
                                     else {
-                                        id.setCustomValidity('');
+                                        id.setCustomValidity("");
                                     }
                                     
                                     if(passwordValidity.valueMissing) {
-                                        password.setCustomValidity('Please fill out this field!');
+                                        password.setCustomValidity("Please fill out this field!");
                                     } 
                                     else if (passwordValidity.patternMismatch) {
-                                        password.setCustomValidity('Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!'); 
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!"); 
                                     } 
-                                    else {
-                                        password.setCustomValidity('');
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
                                     }
-                                    
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
                                     id.reportValidity();
                                     password.reportValidity();
                                 }

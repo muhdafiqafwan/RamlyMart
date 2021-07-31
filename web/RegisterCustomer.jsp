@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
     <head>
@@ -28,6 +29,10 @@
             }
             label {
                 padding: 12px 12px 12px 60px;
+                display: inline-block;
+            }
+            small {
+                padding: 0px 12px 12px 60px;
                 display: inline-block;
             }
             input[type=text], input[type=password], input[type=email], input[type=number]{
@@ -84,8 +89,7 @@
                             <p align="center">Let's join Ramly Family now!
                                 <br>Already have an account?<b><a href="LoginCustomer.jsp"> Log In Here</a></b>
                             </p>
-                            <p align="center"><span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span></p>
-                            <form name="form1" method="post" id="ff"  action="CustomerController?action=registerCustomer">
+                            <form id="ff" name="form1" method="post" action="CustomerController?action=registerCustomer" onsubmit="return passwordComparison()">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Name</label>
@@ -100,6 +104,8 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">No. Phone</label>
+                                        <br>
+                                        <small>Example: "012-3456789"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
@@ -111,10 +117,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Email</label>
+                                        <br>
+                                        <small>Example: "aliabu@gmail.com"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custEmail" name="custEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" required>
+                                            <input type="text" id="custEmail" name="custEmail" pattern="[a-z0-9._%+-]+@gmail.com" required>
                                         </div>
                                     </center>
                                 </div>
@@ -143,12 +151,12 @@
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Password</label>
+                                        <br>
+                                        <small>Example: "Aliabu123"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
                                             <input type="password" id="custPassword1" name="custPassword1"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
-                                            <br>
-                                            <span id = "message" style="color:red"> </span> 
                                         </div>
                                     </center>
                                 </div>
@@ -159,9 +167,9 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="custPassword2" name="custPassword2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required>
+                                            <input type="password" id="custPassword2" name="custPassword2" required>
                                             <br>
-                                            <span id = "messageMatch" style="color:red"> </span> <br>
+                                            <span id="messageMatch" style="color:red"> </span> <br>
                                         </div>
                                     </center>
                                 </div>
@@ -171,36 +179,143 @@
                                 </div>
                                 <div class="row" align="center">
                                     <br>
-                                    <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="return showFormValidation()">
+                                    <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="formValidation()">
                                 </div>
                             </form>
+                            <c:set var="message" value="${requestScope.fail}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'error',
+                                        title: 'Username/Email Has Been Used!',
+                                        text: 'Please try another username or email',
+                                        showConfirmButton: true,
+                                        timer: 4500
+                                    });
+                                </script>
+                            </c:if>
+                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showFormValidation() {  
-                                    var pw1 = document.getElementById("custPassword1").value;  
-                                    var pw2 = document.getElementById("custPassword2").value;  
+                                function formValidation() {
+                                    var name = document.getElementById("custName");
+                                    var nameValidity = name.validity;
+                                    var phone = document.getElementById("custPhone");
+                                    var phoneValidity = phone.validity;
+                                    var email = document.getElementById("custEmail");
+                                    var emailValidity = email.validity;
+                                    var address = document.getElementById("custAddress");
+                                    var addressValidity = address.validity;
+                                    var username = document.getElementById("custUsername");
+                                    var usernameValidity = username.validity;
+                                    var password = document.getElementById("custPassword1");
+                                    var passwordValidity = password.validity;
 
-                                    if(pw1 !== pw2)  {   
-                                       document.getElementById("messageMatch").innerHTML = "**Password did not match";
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+                                    
+                                    if(phoneValidity.valueMissing) {
+                                        phone.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(phoneValidity.patternMismatch) {
+                                        phone.setCustomValidity("Must be digits only and please use the correct format! Example: xxx-xxxxxxx ");
+                                    }
+                                    else if(phoneValidity.tooLong) {
+                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
+                                    }
+                                    else if(phoneValidity.tooShort) {
+                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
+                                    }
+                                    else {
+                                        phone.setCustomValidity("");
+                                    }
+                                    
+                                    if(emailValidity.valueMissing) {
+                                        email.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(emailValidity.patternMismatch) {
+                                        email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
+                                    }
+                                    else {
+                                        email.setCustomValidity('');
+                                    }
+                                    
+                                    if(addressValidity.valueMissing) {
+                                        address.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        address.setCustomValidity("");
+                                    }
+                                    
+                                    if(usernameValidity.valueMissing) {
+                                        username.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(usernameValidity.patternMismatch) {
+                                        username.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        username.setCustomValidity("");
+                                    }
+                                    
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity("Please fill out this field!");
+                                    } 
+                                    else if(passwordValidity.patternMismatch) {
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
+                                    }
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
+                                    }
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
+                                    name.reportValidity();
+                                    phone.reportValidity();
+                                    email.reportValidity();
+                                    address.reportValidity();
+                                    username.reportValidity();
+                                    password.reportValidity();
+                                }
+                                function passwordComparison() {  
+                                    var password1 = document.getElementById("custPassword1").value;  
+                                    var password2 = document.getElementById("custPassword2").value;  
+
+                                    if(password1 !== password2)  {                              
+                                        Swal.fire({
+                                            position: 'top-center',
+                                            icon: 'error',
+                                            title: 'Password Did Not Match!',
+                                            showConfirmButton: true,
+                                            timer: 4500
+                                        });
                                        return false; 
                                     }
                                     return true;
                                 }
                                 function showPassword() {
-                                    var x = document.getElementById("custPassword1");
-                                    var y = document.getElementById("custPassword2");
+                                    var password1 = document.getElementById("custPassword1");
+                                    var password2 = document.getElementById("custPassword2");
 
-                                    if(x.type === "password") {
-                                        x.type = "text";
+                                    if(password1.type === "password") {
+                                        password1.type = "text";
                                     }
                                     else {
-                                        x.type = "password";
+                                        password1.type = "password";
                                     }
                                     
-                                    if(y.type === "password") {
-                                        y.type = "text";
+                                    if(password2.type === "password") {
+                                        password2.type = "text";
                                     }
                                     else {
-                                        y.type = "password";
+                                        password2.type = "password";
                                     }
                                 }
                             </script>  

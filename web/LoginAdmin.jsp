@@ -28,8 +28,8 @@
                 box-sizing: border-box;
             }
             label {
-              padding: 12px 12px 12px 60px;
-              display: inline-block;
+                padding: 12px 12px 12px 60px;
+                display: inline-block;
             }
             input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
                 -webkit-appearance: none; 
@@ -60,6 +60,7 @@
                 color: #fff;
             }
 	</style>
+    <a href="LoginCustomer.jsp"></a>
     </head>
     <body>
 	<!-- header-bot-->
@@ -84,7 +85,7 @@
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Log In</h3>
                             <p align="center">Log In now, Let's start your work.</p>
-                            <form name="form" action="LoginController?action=loginAdmin" method="post">
+                            <form name="form" method="post" action="LoginController?action=loginAdmin">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Identification Number</label>
@@ -136,25 +137,27 @@
                                     var passwordValidity = password.validity;
 
                                     if(idValidity.valueMissing) {
-                                        id.setCustomValidity('Please fill out this field!');
+                                        id.setCustomValidity("Please fill out this field!");
                                     }
                                     else if(idValidity.patternMismatch) {
-                                        id.setCustomValidity('Must be digits only!');
+                                        id.setCustomValidity("Must be digits only!");
                                     }
                                     else {
-                                        id.setCustomValidity('');
+                                        id.setCustomValidity("");
                                     }
                                     
                                     if(passwordValidity.valueMissing) {
-                                        password.setCustomValidity('Please fill out this field!');
+                                        password.setCustomValidity("Please fill out this field!");
                                     } 
                                     else if (passwordValidity.patternMismatch) {
-                                        password.setCustomValidity('Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!'); 
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!"); 
                                     } 
-                                    else {
-                                        password.setCustomValidity('');
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
                                     }
-                                    
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
                                     id.reportValidity();
                                     password.reportValidity();
                                 }

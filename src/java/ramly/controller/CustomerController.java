@@ -98,7 +98,28 @@ public class CustomerController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession cartsession = request.getSession();
         
-        if(action.equalsIgnoreCase("updateCustomer"))  { //CUSTOMER UOPDATES PROFILE   
+        if(action.equalsIgnoreCase("registerCustomer")) { //CUSTOMER REGISTERS ACCOUNT  
+            String custUsername = request.getParameter("custUsername");
+            String custName = request.getParameter("custName");
+            String custPhone = request.getParameter("custPhone");
+            String custEmail = request.getParameter("custEmail");
+            String custPassword = request.getParameter("custPassword1");
+            String custAddress = request.getParameter("custAddress");
+            Customer customer = new Customer(custUsername, custName, custPhone, custEmail, custPassword, custAddress);		
+            customer = daoCustomer.getCustomer(customer);
+
+            if(!customer.isValid()) {
+                daoCustomer.add(customer);
+                forward = LOGIN_CUSTOMER;
+                request.setAttribute("success", "Register Successful");
+            }
+            else {
+                daoCustomer.updateCustomer(customer);
+                forward = REGISTER_CUSTOMER;
+                request.setAttribute("fail", "Username/Email Has Been Used");
+            }
+        }
+        else if(action.equalsIgnoreCase("updateCustomer"))  { //CUSTOMER UOPDATES PROFILE   
             int custID = Integer.parseInt(request.getParameter("custID"));
             String custUsername = request.getParameter("custUsername");
             String custName = request.getParameter("custName");
@@ -120,27 +141,6 @@ public class CustomerController extends HttpServlet {
             session.setAttribute("login", customer);
             forward = VIEW_CUSTOMER;
             request.setAttribute("customer", customer); 
-        }
-        else if(action.equalsIgnoreCase("registerCustomer")) { //CUSTOMER REGISTERS ACCOUNT  
-            String custUsername = request.getParameter("custUsername");
-            String custName = request.getParameter("custName");
-            String custPhone = request.getParameter("custPhone");
-            String custEmail = request.getParameter("custEmail");
-            String custPassword = request.getParameter("custPassword1");
-            String custAddress = request.getParameter("custAddress");
-            Customer customer = new Customer(custUsername, custName, custPhone, custEmail, custPassword, custAddress);		
-            customer = daoCustomer.getCustomer(customer);
-
-            if(!customer.isValid()) {
-                daoCustomer.add(customer);
-                forward = LOGIN_CUSTOMER;
-                request.setAttribute("success", "Register successful! You can now login into the system");
-            }
-            else {
-                daoCustomer.updateCustomer(customer);
-                forward = REGISTER_CUSTOMER;
-                request.setAttribute("error", "Username or email address you entered have been used! Please try another username or email address");
-            }
         }
         else if(action.equalsIgnoreCase("updateCustomerAddress")) { //CUSTOMER UPDATES ADDRESS FOR DELIVERY    
             int custID = Integer.parseInt(request.getParameter("custID"));

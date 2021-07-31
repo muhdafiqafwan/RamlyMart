@@ -68,7 +68,7 @@
                                         icon: 'success',
                                         title: 'Successfully Login',
                                         showConfirmButton: false,
-                                        timer: 4500
+                                        timer: 2500
                                     });
                                 </script>
                             </c:if>
