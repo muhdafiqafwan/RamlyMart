@@ -97,7 +97,7 @@
                                 </tr>
                             </table>
                             <center>
-                                <a href="RiderController?action=updateRider&id=<%=rider.getRiderID()%>"><button class="btn btn-success">Edit</button></a>
+                                <a href="RiderController?action=updateRider&id=<%=rider.getRiderID()%>"><button style="font-size: 17px;" class="btn btn-success">Edit</button></a>
                             </center>
                         </div>
                         <!-- //first section -->

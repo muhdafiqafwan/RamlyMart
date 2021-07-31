@@ -83,7 +83,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemName" id="itemName" placeholder="Item Name.." required>
+                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]+$" placeholder="Item Name.." required>
                                         </div>
                                     </center>
                                 </div>
@@ -134,7 +134,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemDescription" id="itemDescription" placeholder="Item Description.." required>
+                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]+$" placeholder="Item Description.." required>
                                         </div>
                                     </center>
                                 </div>

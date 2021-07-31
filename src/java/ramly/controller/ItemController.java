@@ -107,17 +107,19 @@ public class ItemController extends HttpServlet {
             int itemQty = Integer.parseInt(request.getParameter("itemQty"));
             String itemType = request.getParameter("itemType");
             String itemDescription = request.getParameter("itemDescription");
-            ItemCatalogue item = new ItemCatalogue(itemID,itemName,itemType,itemPrice,itemQty, itemDescription);
-            item = daoItem.getItem(item);
-            daoItem.updateItem(item);
-            try {
-                item = daoItem.get(itemID);
-                forward = CATALOGUE;
-                request.setAttribute("itemAll", daoItem.getAllItem()); 
-            } 
-            catch(SQLException ex) {
-                Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+            InputStream inputStream = null;
+
+            Part filePart = request.getPart("itemImg");
+            if (filePart != null) {
+                inputStream = filePart.getInputStream();
             }
+            
+            int row = daoItem.updateItem(itemID, itemName,itemPrice, itemQty, itemType, itemDescription, inputStream);
+            if(row > 0) {
+                System.out.println("File uploaded and saved into database");
+            }
+              forward = CATALOGUE;
+              request.setAttribute("itemAll", daoItem.getAllItem()); 
         }
         else if(action.equalsIgnoreCase("searchItem")) { //SEARCH FOR ITEM
             String search = request.getParameter("search");

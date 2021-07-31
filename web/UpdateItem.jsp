@@ -47,6 +47,12 @@
                 cursor: pointer; 
                 border-radius:3px; 
             } 
+            div.img {
+                width: 90%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
 	</style>
     </head>
     <%@page import="ramly.model.Admin"%>
@@ -83,7 +89,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemName" id="itemName"  value="<c:out value="${item.itemName}"/>"  required>
+                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]+$"  value="<c:out value="${item.itemName}"/>"  required>
                                             <input type="hidden" name="itemID" id="itemName" value="<c:out value="${item.itemID}"/>"/><br>
                                         </div>
                                     </center>
@@ -135,7 +141,23 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemDescription" id="itemDescription" value="<c:out value="${item.itemDescription}"/>" required="required" />
+                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]+$" value="<c:out value="${item.itemDescription}"/>" required="required" />
+                                        </div>
+                                    </center>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="itemImg">Item Image (png/jpeg only): </label>
+                                        <br>
+                                        <center>    
+                                            <div class="img"><img src="data:image/jpg;base64,${item.base64Image}" id="output" width="90" height="150"/></div>
+                                        </center>
+                                    </div>
+                                    <br>
+                                    <center>
+                                        <div class="col-75">
+                                            <input type="file" name="itemImg" id="itemImg" accept="image/png, image/jpeg" onchange="loadFile(event)"  required>
                                         </div>
                                     </center>
                                 </div>
@@ -157,6 +179,14 @@
                                         timer: 4500
                                     })
                                 }
+                                
+                                var loadFile = function(event) {
+                                var output = document.getElementById('output');
+                                output.src = URL.createObjectURL(event.target.files[0]);
+                                output.onload = function() {
+                                    URL.revokeObjectURL(output.src) // free memory
+                                    }
+                                };
                             </script>
                         </div>
                         <!-- //first section -->

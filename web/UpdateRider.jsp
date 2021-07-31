@@ -106,7 +106,7 @@
                     <br>
                     <div class="card">
                         <div class="card-body">           
-                            <form name="form1" method="post" id="ff" action="RiderController?action=updateRider">
+                            <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="RiderController?action=updateRider">
                                 <center>
                                     <div class="row">
                                         <div class="col-25">
@@ -164,7 +164,7 @@
                                 <center>
                                     <br><br>
                                     <a href="RiderController?action=viewRider&id=<%=rider.getRiderID()%>"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                                    <input type="submit" value="Update" onclick="showAlertSuccessfulUpdate()" class="btn btn-success"> 
+                                    <input type="submit" value="Update" class="btn btn-success"> 
                                     <br><br>
                                 </center>
                             </form>
@@ -179,8 +179,8 @@
                             icon: 'success',
                             title: 'Profile update successfully',
                             showConfirmButton: false,
-                            timer: 2500
-                        })
+                            timer: 4500
+                        });
                     }
                     function showPassword() {
                         var x = document.getElementById("riderPassword")

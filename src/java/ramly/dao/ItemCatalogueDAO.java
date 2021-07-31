@@ -238,29 +238,29 @@ public class ItemCatalogueDAO {
 		
 	}
 
-    public ItemCatalogue updateItem(ItemCatalogue item) {
-           
-            
-            ItemID = item.getitemID();
-            ItemName = item.getitemName();
-            ItemType = item.getitemType();
-            ItemPrice = item.getitemPrice();
-            ItemQty = item.getitemQty();
-            ItemDescription = item.getitemDescription();
-	
-	    String searchQuery = "UPDATE ITEMCATALOGUE SET ItemName='" + ItemName + "' , ItemType='" + ItemType + "' , ItemPrice='" + ItemPrice + "' , ItemQty ='" + ItemQty  + "' , ItemDescription='" + ItemDescription + "' WHERE ItemID = '" + ItemID + "'";
-		
-            try {
+    public int updateItem(int itemID, String itemName, Double itemPrice, int itemQty, String itemType, String itemDescription, InputStream file) {
+            int row = 0;
+            try  {
+                currentCon = ConnectionManager.getConnection();
+                ps=currentCon.prepareStatement("update itemcatalogue set itemName=?, itemPrice=?, itemQty=?, itemType=?, itemDescription=?, itemImage=? where itemId=?");
+                
+                ps.setString(1,itemName);
+                ps.setDouble(2, itemPrice);
+                ps.setInt(3, itemQty);
+                ps.setString(4,itemType);
+                ps.setString(5, itemDescription); 
+                if (file != null) {
+                    ps.setBlob(6,file);
+                }
+                ps.setInt(7,itemID);
+                ps.executeUpdate();
 
-            currentCon = ConnectionManager.getConnection();
-            stmt = currentCon.createStatement();
-            stmt.executeUpdate(searchQuery);
-	        
-	    } 
+            } 
             catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-            return item;
+                // process sql exception
+                printSQLException(e);
+            }
+            return row;
 	}
       // <!-- AFIQ - Start. Tolak stock dlm database bila cust add dlm cart  -->
         public void minusStock(int id, int qty) {
