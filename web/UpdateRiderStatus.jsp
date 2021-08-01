@@ -61,6 +61,11 @@
                 border-radius: 4px;
                 resize: vertical;
             }
+            input[readonly] {
+                color: graytext;
+                background: buttonface;
+                outline: none;
+            }
             label {
                 padding: 12px 12px 12px 0;
                 display: inline-block;
@@ -124,7 +129,7 @@
                                             <label for="name">Rider Name:</label>
                                         </div>	
                                         <div class="col-75">
-                                            <input type="text" name="riderName" id="riderName" value="<%=rider.getRiderName()%>"><br>
+                                            <input type="text" name="riderName" id="riderName" value="<%=rider.getRiderName()%>" readonly><br>
                                             <input type="text" name="riderID" id="riderID" value="<%=rider.getRiderID()%>" hidden><br>	
                                         </div>
                                     </div>
@@ -144,8 +149,8 @@
                                     </div>
                                     <br> 
                                     <center>
-                                        <a href="ManageRiderStatus.jsp" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                        <input type="submit" value="Update" class="btn btn-success">
+                                        <a style="font-size: 17px;" href="ManageRiderStatus.jsp" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                                        <input style="font-size: 17px;" type="submit" value="Update" class="btn btn-success">
                                     </center>
                                     <br><br>
                                 </form>

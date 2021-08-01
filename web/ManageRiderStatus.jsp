@@ -91,7 +91,7 @@
                                     <td><%=rider.getRiderName()%></td>
                                 </tr>                
                                 <tr>
-                                    <th>Rider Status : </th>
+                                    <th>Rider Status</th>
                                     <th>:</th>
                                     <td><%=rider.getRiderStatus()%></td>
                                 </tr>
@@ -100,13 +100,13 @@
                                 <c:set var="riderStatus" value="<%=rider.getRiderStatus()%>"/>
                                 <c:choose>
                                     <c:when test="${riderStatus.equalsIgnoreCase('Available')}">
-                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button class="btn btn-success">Edit</button></a>
+                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button style="font-size: 17px;" class="btn btn-success">Edit</button></a>
                                     </c:when>
                                     <c:when test="${riderStatus.equalsIgnoreCase('Unavailable')}">
-                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button class="btn btn-success">Edit</button></a>
+                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button style="font-size: 17px;" class="btn btn-success">Edit</button></a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button class="btn btn-success" disabled>Edit</button></a>
+                                        <a href="RiderController?action=manageRider&id=<%=rider.getRiderID()%>"><button style="font-size: 17px;" class="btn btn-success" disabled>Edit</button></a>
                                     </c:otherwise>
                                 </c:choose>
                             </center>

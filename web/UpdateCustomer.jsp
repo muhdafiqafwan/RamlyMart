@@ -47,7 +47,7 @@
                 float: left;
                 width: 80%;
                 margin-top: 15px;
-                text-align: center;
+                text-align: left;
              }
             /* Clear floats after the columns */
             .row:after {
@@ -73,6 +73,9 @@
             label {
                 padding: 12px 12px 12px 0;
                 display: inline-block;
+            }
+            small {
+                font-size: 80%;
             }
             .product-sec2 {
                 box-shadow: 0px 10px 15px 0px #D6D6D6;
@@ -122,7 +125,7 @@
                                             <label for="name">Name :</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="text" name="custName" pattern="^[a-zA-Z]{2,}(?: [a-zA-Z-@']+){0,}$" title="Cannot starts with numbers and symbols. Must contains atleast 2 characters. Cannot contain numbers and symbols except: @ - ' "  id="custName" value="<%=cust.getCustName()%>" required><br>	
+                                            <input type="text" name="custName" pattern="[a-zA-Z ]+" id="custName" value="<%=cust.getCustName()%>" required><br>	
                                         </div>
                                     </div>
                                     <div class="row">
@@ -130,7 +133,8 @@
                                             <label for="name">No. Phone:</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="tel" name="custPhone" id="custPhone" placeholder="Example: 012-3456789" pattern="[0-9]{3}-[0-9]{7}" value="<%=cust.getCustPhone()%>" required><br>	
+                                            <small>Example: "012-3456789" | Maximum 10 digits</small>
+                                            <input type="tel" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required><br>	
                                         </div>
                                      </div>  
                                     <div class="row">
@@ -138,7 +142,7 @@
                                             <label for="name">Email :</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="email" name="custEmail" id="custEmail" placeholder="Example: abuali@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<%=cust.getCustEmail()%>" readonly><br>	
+                                            <input type="email" name="custEmail" id="custEmail" value="<%=cust.getCustEmail()%>" readonly><br>	
                                         </div>
                                     </div>
                                     <div class="row">
@@ -155,7 +159,7 @@
                                             <label for="name">Username :</label>
                                         </div>	
                                         <div class="col-75">
-                                            <input type="text" name="custUsername" id="custUsername" value="<%=cust.getCustUsername()%>" required><br>	
+                                            <input type="text" name="custUsername" pattern="[A-Za-z]+" id="custUsername" value="<%=cust.getCustUsername()%>" required><br>	
                                         </div>
                                     </div>
                                     <div class="row">
@@ -163,20 +167,21 @@
                                             <label for="name">Password :</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="password" name="custPassword" id="custPassword" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=cust.getCustPassword()%>" required><br>	
+                                            <small>Example: "Aliabu123" | Mininum 6 characters</small>
+                                            <input type="password" name="custPassword" id="custPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=cust.getCustPassword()%>" required><br>	
                                         </div>
                                     </div>
                                 </center>
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                 </div>
-                                <center>
-                                    <br><br>
-                                    <a href="CustomerController?action=viewCustomer&id=<%=cust.getCustID()%>" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                    <input type="submit" value="Update" class="btn btn-success">
-                                    <br><br>
-                                </center>
                             </form>
+                            <center>
+                                <br><br>
+                                <button style="font-size: 17px;" onclick="history.back();" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                                <input style="font-size: 17px;" type="submit" form="ff" value="Update" onclick="formValidation()" class="btn btn-success"> 
+                                <br><br>
+                            </center> 
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
                                 function showAlertSuccessfulUpdate() {
@@ -197,6 +202,79 @@
                                     else {
                                         x.type = "password";
                                     }
+                                }
+                                function formValidation() {
+                                    var name = document.getElementById("custName");
+                                    var nameValidity = name.validity;
+                                    var phone = document.getElementById("custPhone");
+                                    var phoneValidity = phone.validity;
+                                    var address = document.getElementById("custAddress");
+                                    var addressValidity = address.validity;
+                                    var username = document.getElementById("custUsername");
+                                    var usernameValidity = username.validity;
+                                    var password = document.getElementById("custPassword");
+                                    var passwordValidity = password.validity;
+
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+                                    
+                                    if(phoneValidity.valueMissing) {
+                                        phone.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(phoneValidity.patternMismatch) {
+                                        phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx ");
+                                    }
+                                    else if(phoneValidity.tooLong) {
+                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
+                                    }
+                                    else if(phoneValidity.tooShort) {
+                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
+                                    }
+                                    else {
+                                        phone.setCustomValidity("");
+                                    }
+                                    
+                                    if(addressValidity.valueMissing) {
+                                        address.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        address.setCustomValidity("");
+                                    }
+                                    
+                                    if(usernameValidity.valueMissing) {
+                                        username.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(usernameValidity.patternMismatch) {
+                                        username.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        username.setCustomValidity("");
+                                    }
+                                    
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity("Please fill out this field!");
+                                    } 
+                                    else if(passwordValidity.patternMismatch) {
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
+                                    }
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
+                                    }
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
+                                    name.reportValidity();
+                                    phone.reportValidity();
+                                    address.reportValidity();
+                                    username.reportValidity();
+                                    password.reportValidity();
                                 }
                             </script>        
                         </div>

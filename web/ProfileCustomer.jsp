@@ -116,7 +116,7 @@
                                 </tr>    
                             </table>
                             <center>
-                                <a href="CustomerController?action=updateCustomer&id=<%=cust.getCustID()%>"><button class="btn btn-success">Edit</button></a>
+                                <a href="CustomerController?action=updateCustomer&id=<%=cust.getCustID()%>"><button style="font-size: 17px;" class="btn btn-success">Edit</button></a>
                             </center>                            
                         </div>
                         <!-- //first section -->

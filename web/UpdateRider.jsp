@@ -46,7 +46,7 @@
                 float: left;
                 width: 80%;
                 margin-top: 15px;
-                text-align: center;
+                text-align: left;
             }
             /* Clear floats after the columns */
             .row:after {
@@ -72,6 +72,9 @@
             label {
                 padding: 12px 12px 12px 0;
                 display: inline-block;
+            }
+            small {
+                font-size: 80%;
             }
             .product-sec2 {
                 box-shadow: 0px 10px 15px 0px #D6D6D6;
@@ -121,7 +124,7 @@
                                             <label for="name">Name:</label>
                                         </div>	
                                         <div class="col-75">
-                                            <input type="text" name="riderName" id="riderName" value="<%=rider.getRiderName()%>" required><br>	
+                                            <input type="text" name="riderName" id="riderName" pattern="[a-zA-Z ]+" value="<%=rider.getRiderName()%>" required><br>	
                                         </div>
                                     </div>
                                     <div class="row">
@@ -129,7 +132,8 @@
                                             <label for="name">No. Phone:</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="tel" name="riderPhone" id="riderPhone" placeholder="Example: 012-3456789" pattern="[0-9]{3}-[0-9]{7}" value="<%=rider.getRiderPhone()%>" required><br>
+                                            <small>Example: "012-3456789" | Maximum 10 digits</small>
+                                            <input type="tel" name="riderPhone" id="riderPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=rider.getRiderPhone()%>" required><br>
                                         </div>
                                      </div>
                                     <div class="row">
@@ -137,7 +141,7 @@
                                             <label for="name">Email :</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="email" name="riderEmail" id="riderEmail" placeholder="Example: abuali@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<%=rider.getRiderEmail()%>" readonly><br>
+                                            <input type="email" name="riderEmail" id="riderEmail" pattern="[a-z0-9._%+-]+@gmail.com" value="<%=rider.getRiderEmail()%>" readonly><br>
                                         </div>
                                      </div>
                                     <div class="row">
@@ -145,8 +149,8 @@
                                             <label for="name">Plate Number:</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="text" name="riderPlate" id="riderPlate" value="<%=rider.getRiderPlate()%>" required><br>
-                                            <!-- ^[A-Z]{1,3}\s[0-9]{1,4}\s?[A-Z]{0,1}$ -->
+                                            <small>Example: "ABC1234 or AB1234C"</small>
+                                            <input type="text" name="riderPlate" id="riderPlate" pattern="^([A-Z]{3}[0-9]{4})?([A-Z]{2}[0-9]{4}[A-Z]{1})?$" minlength="7" maxlength="7" value="<%=rider.getRiderPlate()%>" required><br>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -154,20 +158,21 @@
                                             <label for="name">Password :</label>
                                         </div>
                                         <div class="col-75">
-                                            <input type="password" name="riderPassword" id="riderPassword" placeholder="Example: Abu123" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=rider.getRiderPassword()%>" required><br>
+                                            <small>Example: "Aliabu123" | Mininum 6 characters</small>
+                                            <input type="password" name="riderPassword" id="riderPassword"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=rider.getRiderPassword()%>" required><br>
                                         </div>
                                     </div>
                                 </center>
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                 </div>
+                            </form>
                                 <center>
                                     <br><br>
-                                    <a href="RiderController?action=viewRider&id=<%=rider.getRiderID()%>"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                                    <input type="submit" value="Update" class="btn btn-success"> 
+                                    <button style="font-size: 17px;" onclick="history.back();" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                                    <input style="font-size: 17px;" type="submit" form="ff" value="Update" onclick="formValidation()" class="btn btn-success"> 
                                     <br><br>
                                 </center>
-                            </form>
                         </div>
                     </div>
                 </div>                
@@ -191,6 +196,88 @@
                         else {
                             x.type = "password";
                         }
+                    }
+                    function formValidation() {
+                        var name = document.getElementById("riderName");
+                        var nameValidity = name.validity;
+                        var phone = document.getElementById("riderPhone");
+                        var phoneValidity = phone.validity;
+                        var email = document.getElementById("riderEmail");
+                        var emailValidity = email.validity;
+                        var plateNumber = document.getElementById("riderPlate");
+                        var plateNumberValidity = plateNumber.validity;
+                        var password = document.getElementById("riderPassword");
+                        var passwordValidity = password.validity;
+
+                        if(nameValidity.valueMissing) {
+                            name.setCustomValidity("Please fill out this field!");
+                        }
+                        else if(nameValidity.patternMismatch) {
+                            name.setCustomValidity("Must be letters only!");
+                        }
+                        else {
+                            name.setCustomValidity("");
+                        }
+
+                        if(phoneValidity.valueMissing) {
+                            phone.setCustomValidity("Please fill out this field!");
+                        }
+                        else if(phoneValidity.patternMismatch) {
+                            phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx ");
+                        }
+                        else if(phoneValidity.tooLong) {
+                            phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
+                        }
+                        else if(phoneValidity.tooShort) {
+                            phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
+                        }
+                        else {
+                            phone.setCustomValidity("");
+                        }
+
+                        if(emailValidity.valueMissing) {
+                            email.setCustomValidity("Please fill out this field!");
+                        }
+                        else if(emailValidity.patternMismatch) {
+                            email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
+                        }
+                        else {
+                            email.setCustomValidity('');
+                        }
+
+                        if(plateNumberValidity.valueMissing) {
+                            plateNumber.setCustomValidity("Please fill out this field!");
+                        }
+                        else if(plateNumberValidity.patternMismatch) {
+                            plateNumber.setCustomValidity("Must contain 3 uppercase letters, 4 digits and no spacing!");
+                        }
+                        else if(plateNumberValidity.tooLong) {
+                            plateNumber.setCustomeValidity("Plate number entered exceeds 7 digits!");
+                        }
+                        else if(plateNumberValidity.tooShort) {
+                            plateNumber.setCustomeValidity("Plate number entered subceeds 7 digits!");
+                        }
+                        else {
+                            plateNumber.setCustomValidity("");
+                        }
+
+                        if(passwordValidity.valueMissing) {
+                            password.setCustomValidity("Please fill out this field!");
+                        } 
+                        else if(passwordValidity.patternMismatch) {
+                            password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
+                        }
+                        else if(passwordValidity.tooShort) {
+                            password.setCustomValidity("Password entered subceeds 6 digits!");
+                        }
+                        else {
+                            password.setCustomValidity("");
+                        }
+                        name.reportValidity();
+                        phone.reportValidity();
+                        email.reportValidity();
+                        plateNumber.reportValidity();
+                        password.reportValidity();
                     }
                 </script>
             </div>
