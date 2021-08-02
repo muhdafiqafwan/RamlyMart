@@ -42,6 +42,11 @@
               padding: 12px 12px 12px 60px;
               display: inline-block;
             }
+            input[readonly] {
+                color: graytext;
+                background: buttonface;
+                outline: none;
+            }
         </style>
     </head>
     <%@page import="ramly.model.Admin"%>

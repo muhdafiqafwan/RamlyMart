@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,7 +56,7 @@
                 display: table;
                 clear: both;
             }
-            input[type=text], input[type=password], input[type=email], input[type=tel], textarea {
+            input[type=text], input[type=password], input[type=email], input[type=tel], textarea, select {
                 width: 100%;
                 padding: 12px;
                 border: 1px solid #ccc;
@@ -147,10 +148,55 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-25">
-                                            <label for="subject">Address :</label>
+                                            <label for="subject">Address Line :</label>
                                         </div>
                                         <div class="col-75">
-                                            <textarea name="custAddress" id="custAddress" required><%=cust.getCustAddress()%></textarea>
+                                            <small>Example: "No.1, Street, Area"</small>
+                                            <c:set var = "fullAddress" value="<%=cust.getCustAddress()%>"/>
+                                            <c:set var="addressLine" value="${fn:split(fullAddress, ',')}" />
+                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d.*]{1,},[^\S][\w\d.* ]{1,},[^\S][\w\d.* ]{1,}$" minlength="5" value="<c:out value="${addressLine[0]}"/><c:out value="${','}"/><c:out value="${addressLine[1]}"/><c:out value="${','}"/><c:out value="${addressLine[2]}"/>" required>
+                                            <br>	
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-25">
+                                            <label for="subject">Postcode :</label>
+                                        </div>
+                                        <div class="col-75">
+                                            <c:set var="postcodecity" value="${fn:split(addressLine[3], ' ')}" />
+                                            <input type="text" id="custPostcode" name="custPostcode" pattern="^[0-9]{0,}$" minlength="5" maxlength="5" value="<c:out value="${postcodecity[0]}"/>" required>
+                                            <br>	
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-25">
+                                            <label for="subject">City :</label>
+                                        </div>
+                                        <div class="col-75">
+                                            <input type="text" id="custCity" name="custCity" pattern="^\S\D*$" minlength="4" value="<c:out value="${postcodecity[1]}"/>" required>
+                                            <br>	
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-25">
+                                            <label for="subject">State :</label>
+                                        </div>
+                                        <div class="col-75">
+                                            <select id="custState" name="custState" required>
+                                                <option value="Johor" <c:if test="${addressLine[4].equalsIgnoreCase(' Johor')}">selected</c:if>>Johor</option>
+                                                <option value="Kedah" <c:if test="${addressLine[4].equalsIgnoreCase(' Kedah')}">selected</c:if>>Kedah</option>
+                                                <option value="Kelantan" <c:if test="${addressLine[4].equalsIgnoreCase(' Kelantan')}">selected</c:if>>Kelantan</option>
+                                                <option value="Malacca" <c:if test="${addressLine[4].equalsIgnoreCase(' Malacca')}">selected</c:if>>Malacca</option>
+                                                <option value="Negeri Sembilan" <c:if test="${addressLine[4].equalsIgnoreCase(' Negeri Sembilan')}">selected</c:if>>Negeri Sembilan</option>
+                                                <option value="Pahang" <c:if test="${addressLine[4].equalsIgnoreCase(' Pahang')}">selected</c:if>>Pahang</option>
+                                                <option value="Penang" <c:if test="${addressLine[4].equalsIgnoreCase(' Penang')}">selected</c:if>>Penang</option>
+                                                <option value="Perak" <c:if test="${addressLine[4].equalsIgnoreCase(' Perak')}">selected</c:if>>Perak</option>
+                                                <option value="Perlis" <c:if test="${addressLine[4].equalsIgnoreCase(' Perlis')}">selected</c:if>>Perlis</option>
+                                                <option value="Sabah" <c:if test="${addressLine[4].equalsIgnoreCase(' Sabah')}">selected</c:if>>Sabah</option>
+                                                <option value="Sarawak" <c:if test="${addressLine[4].equalsIgnoreCase(' Sarawak')}">selected</c:if>>Sarawak</option>
+                                                <option value="Selangor" <c:if test="${addressLine[4].equalsIgnoreCase(' Selangor')}">selected</c:if>>Selangor</option>
+                                                <option value="Terengganu" <c:if test="${addressLine[4].equalsIgnoreCase(' Terengganu')}">selected</c:if>>Terengganu</option>
+                                            </select>
                                             <br>	
                                         </div>
                                     </div>
@@ -210,6 +256,12 @@
                                     var phoneValidity = phone.validity;
                                     var address = document.getElementById("custAddress");
                                     var addressValidity = address.validity;
+                                    var city = document.getElementById("custCity");
+                                    var cityValidity = city.validity;
+                                    var state = document.getElementById("custState");
+                                    var stateValidity = state.validity;
+                                    var postcode = document.getElementById("custPostcode");
+                                    var postcodeValidity = postcode.validity;
                                     var username = document.getElementById("custUsername");
                                     var usernameValidity = username.validity;
                                     var password = document.getElementById("custPassword");
@@ -244,8 +296,51 @@
                                     if(addressValidity.valueMissing) {
                                         address.setCustomValidity("Please fill out this field!");
                                     }
+                                    else if(addressValidity.patternMismatch) {
+                                        address.setCustomValidity("Please use the correct format! Example: No.1, Street, Area");
+                                    }
+                                    else if(addressValidity.tooShort) {
+                                        address.setCustomValidity("Must be atleast 5 characters!");
+                                    }
                                     else {
                                         address.setCustomValidity("");
+                                    }
+                                    
+                                    
+                                    if(cityValidity.valueMissing) {
+                                        city.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(cityValidity.patternMismatch) {
+                                        city.setCustomValidity("Must be letters only!");
+                                    }
+                                    else if(cityValidity.tooShort) {
+                                        city.setCustomValidity("Must be atleast 4 characters!");
+                                    }
+                                    else {
+                                        city.setCustomValidity("");
+                                    }
+                                    
+                                    if(stateValidity.valueMissing) {
+                                        state.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        state.setCustomValidity("");
+                                    }
+                                    
+                                    if(postcodeValidity.valueMissing) {
+                                        postcode.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(postcodeValidity.patternMismatch) {
+                                        postcode.setCustomValidity("Must be digits only!");
+                                    }
+                                    else if(postcodeValidity.tooLong) {
+                                        postcode.setCustomeValidity("Postcode entered exceeds 5 digits!");
+                                    }
+                                    else if(postcodeValidity.tooShort) {
+                                        postcode.setCustomeValidity("Must be 5 digits!");
+                                    }
+                                    else {
+                                        postcode.setCustomValidity("");
                                     }
                                     
                                     if(usernameValidity.valueMissing) {
@@ -273,6 +368,9 @@
                                     name.reportValidity();
                                     phone.reportValidity();
                                     address.reportValidity();
+                                    city.reportValidity();
+                                    state.reportValidity();
+                                    postcode.reportValidity();
                                     username.reportValidity();
                                     password.reportValidity();
                                 }

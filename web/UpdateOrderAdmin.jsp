@@ -65,7 +65,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <div style="  margin: auto; width: 70%; padding-left: 10%; padding-right: 10%;">
-                                <form name="form1" method="post" id="ff"  action="OrderController?action=updateOrderAdmin" style="margin: 0; padding: 0;">         
+                                <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()"   action="OrderController?action=updateOrderAdmin" style="margin: 0; padding: 0;">         
                                     <table class="table table-borderless">
                                         <tbody>
                                             <tr>
@@ -142,7 +142,7 @@
                                     <br>
                                     <center>
                                         <a href="OrderController?action=listOrderAdmin" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                        <input type="submit" value="Update" onclick="showAlertSuccessfulUpdate()" class="btn btn-success">
+                                        <input type="submit" value="Update" class="btn btn-success">
                                     </center>
                                     <br><br>
                                 </form>

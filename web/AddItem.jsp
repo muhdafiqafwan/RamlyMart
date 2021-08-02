@@ -83,7 +83,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]+$" placeholder="Item Name.." required>
+                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]*$" placeholder="Item Name.." required>
                                         </div>
                                     </center>
                                 </div>
@@ -134,7 +134,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]+$" placeholder="Item Description.." required>
+                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]*$" placeholder="Item Description.." required>
                                         </div>
                                     </center>
                                 </div>
@@ -153,7 +153,7 @@
                                 <div class="row" align="center">
                                     <br>
                                     <a href="ItemController?action=catalogue" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                    <input type="reset" class="btn btn-danger" value="Reset"></input>   <input type="submit" class="btn btn-success" value="Submit"></input>
+                                    <input type="reset" class="btn btn-danger" value="Reset"></input>   <input type="submit" class="btn btn-success" value="Submit" onclick="formValidation()"></input>
                                 </div>
                             </form>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -166,6 +166,72 @@
                                         showConfirmButton: false,
                                         timer: 4500
                                     });
+                                }
+                               function formValidation() {
+                                    var name = document.getElementById("itemName");
+                                    var nameValidity = name.validity;
+                                    var price = document.getElementById("itemPrice");
+                                    var priceValidity = price.validity;
+                                    var qty = document.getElementById("itemQty");
+                                    var qtyValidity = qty.validity;
+                                    var desc = document.getElementById("itemDescription");
+                                    var descValidity = desc.validity;
+                                    var img = document.getElementById("itemImg");
+                                    var imgValidity = img.validity;
+
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+                                    
+                                    if(priceValidity.valueMissing) {
+                                        price.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(priceValidity.patternMismatch) {
+                                        price.setCustomValidity("Must be whole number or decimal number. Must be greater than or equal to 1");
+                                    }
+                                    else {
+                                        price.setCustomValidity("");
+                                    }
+                                    
+                                    if(qtyValidity.valueMissing) {
+                                        qty.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(qtyValidity.patternMismatch) {
+                                        qty.setCustomValidity("Must be whole number. Must be greater than or equal to 0");
+                                    }
+                                    else {
+                                        qty.setCustomValidity('');
+                                    }
+                                    
+                                    if(descValidity.valueMissing) {
+                                        desc.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(descValidity.patternMismatch) {
+                                        desc.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        desc.setCustomValidity("");
+                                    }
+                                    
+                                    
+                                    if(imgValidity.valueMissing) {
+                                        img.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        img.setCustomValidity("");
+                                    }
+                                    
+                                    name.reportValidity();
+                                    price.reportValidity();
+                                    qty.reportValidity();
+                                    desc.reportValidity();
+                                    img.reportValidity();
                                 }
                             </script>		
                         </div>

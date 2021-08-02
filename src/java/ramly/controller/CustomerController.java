@@ -104,7 +104,12 @@ public class CustomerController extends HttpServlet {
             String custPhone = request.getParameter("custPhone");
             String custEmail = request.getParameter("custEmail");
             String custPassword = request.getParameter("custPassword1");
-            String custAddress = request.getParameter("custAddress");
+            String address = request.getParameter("custAddress");
+            String city = request.getParameter("custCity");
+            String state = request.getParameter("custState");
+            String postcode = request.getParameter("custPostcode");
+            String custAddress = address + ", " + postcode + " " + city + ", " + state;
+            
             Customer customer = new Customer(custUsername, custName, custPhone, custEmail, custPassword, custAddress);		
             customer = daoCustomer.getCustomer(customer);
 
@@ -126,7 +131,12 @@ public class CustomerController extends HttpServlet {
             String custPhone = request.getParameter("custPhone");
             String custEmail = request.getParameter("custEmail");
             String custPassword = request.getParameter("custPassword");
-            String custAddress = request.getParameter("custAddress");
+            String address = request.getParameter("custAddress");
+            String city = request.getParameter("custCity");
+            String state = request.getParameter("custState");
+            String postcode = request.getParameter("custPostcode");
+            String custAddress = address + ", " + postcode + " " + city + ", " + state;
+            
             Customer customer = new Customer(custID, custUsername, custName, custPhone, custEmail, custPassword, custAddress);				
             customer.setCustID(custID);
             customer.setCustUsername(custUsername);
@@ -144,7 +154,11 @@ public class CustomerController extends HttpServlet {
         }
         else if(action.equalsIgnoreCase("updateCustomerAddress")) { //CUSTOMER UPDATES ADDRESS FOR DELIVERY    
             int custID = Integer.parseInt(request.getParameter("custID"));
-            String custAddress = request.getParameter("custAddress");
+            String address = request.getParameter("custAddress");
+            String city = request.getParameter("custCity");
+            String state = request.getParameter("custState");
+            String postcode = request.getParameter("custPostcode");
+            String custAddress = address + ", " + postcode + " " + city + ", " + state;
             String custPhone = request.getParameter("custPhone");
             Customer customer = new Customer(custID, custAddress, custPhone);				
             customer.setCustID(custID);

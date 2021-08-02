@@ -35,7 +35,7 @@
                 padding: 0px 12px 12px 60px;
                 display: inline-block;
             }
-            input[type=text], input[type=password], input[type=email], input[type=number]{
+            input[type=text], input[type=password], input[type=email], input[type=number],select{
                 width: 90%;
                 padding: 12px;
                 border: 1px solid #ccc;
@@ -129,14 +129,65 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-25">
-                                        <label for="name">Address</label>
+                                        <label for="name">Address Line</label>
+                                        <br>
+                                        <small>Example: "No.1, Street, Area"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custAddress" name="custAddress" required>
+                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d.*]{1,},[^\S][\w\d.* ]{1,},[^\S][\w\d.* ]{1,}$" minlength="5" required>
                                       </div>
                                     </center>
-                                </div><br>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="name">Postcode</label>
+                                    </div>
+                                    <center>
+                                        <div class="col-75">
+                                            <input type="text" id="custPostcode" name="custPostcode" pattern="^[0-9]{0,}$" minlength="5" maxlength="5" required>
+                                      </div>
+                                    </center>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="name">City</label>
+                                    </div>
+                                    <center>
+                                        <div class="col-75">
+                                            <input type="text" id="custCity" name="custCity" pattern="^\S\D*$" minlength="4" required>
+                                      </div>
+                                    </center>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="name">State</label>
+                                    </div>
+                                    <center>
+                                        <div class="col-75">
+                                            <select id="custState" name="custState" required>
+                                              <option value="" selected ></option>  
+                                              <option value="Johor">Johor</option>
+                                              <option value="Kedah">Kedah</option>
+                                              <option value="Kelantan">Kelantan</option>
+                                              <option value="Malacca">Malacca</option>
+                                              <option value="Negeri Sembilan">Negeri Sembilan</option>
+                                              <option value="Pahang">Pahang</option>
+                                              <option value="Penang">Penang</option>
+                                              <option value="Perak">Perak</option>
+                                              <option value="Perlis">Perlis</option>
+                                              <option value="Sabah">Sabah</option>
+                                              <option value="Sarawak">Sarawak</option>
+                                              <option value="Selangor">Selangor</option>
+                                              <option value="Terengganu">Terengganu</option>
+                                            </select>
+                                        </div>
+                                    </center>
+                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Username</label>
@@ -207,6 +258,12 @@
                                     var emailValidity = email.validity;
                                     var address = document.getElementById("custAddress");
                                     var addressValidity = address.validity;
+                                    var city = document.getElementById("custCity");
+                                    var cityValidity = city.validity;
+                                    var state = document.getElementById("custState");
+                                    var stateValidity = state.validity;
+                                    var postcode = document.getElementById("custPostcode");
+                                    var postcodeValidity = postcode.validity;
                                     var username = document.getElementById("custUsername");
                                     var usernameValidity = username.validity;
                                     var password = document.getElementById("custPassword1");
@@ -251,8 +308,51 @@
                                     if(addressValidity.valueMissing) {
                                         address.setCustomValidity("Please fill out this field!");
                                     }
+                                    else if(addressValidity.patternMismatch) {
+                                        address.setCustomValidity("Please use the correct format! Example: No.1, Street, Area");
+                                    }
+                                    else if(addressValidity.tooShort) {
+                                        address.setCustomValidity("Must be atleast 5 characters!");
+                                    }
                                     else {
                                         address.setCustomValidity("");
+                                    }
+                                    
+                                    
+                                    if(cityValidity.valueMissing) {
+                                        city.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(cityValidity.patternMismatch) {
+                                        city.setCustomValidity("Must be letters only!");
+                                    }
+                                    else if(cityValidity.tooShort) {
+                                        city.setCustomValidity("Must be atleast 4 characters!");
+                                    }
+                                    else {
+                                        city.setCustomValidity("");
+                                    }
+                                    
+                                    if(stateValidity.valueMissing) {
+                                        state.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        state.setCustomValidity("");
+                                    }
+                                    
+                                    if(postcodeValidity.valueMissing) {
+                                        postcode.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(postcodeValidity.patternMismatch) {
+                                        postcode.setCustomValidity("Must be digits only!");
+                                    }
+                                    else if(postcodeValidity.tooLong) {
+                                        postcode.setCustomeValidity("Postcode entered exceeds 5 digits!");
+                                    }
+                                    else if(postcodeValidity.tooShort) {
+                                        postcode.setCustomeValidity("Must be 5 digits!");
+                                    }
+                                    else {
+                                        postcode.setCustomValidity("");
                                     }
                                     
                                     if(usernameValidity.valueMissing) {
@@ -281,6 +381,9 @@
                                     phone.reportValidity();
                                     email.reportValidity();
                                     address.reportValidity();
+                                    city.reportValidity();
+                                    state.reportValidity();
+                                    postcode.reportValidity();
                                     username.reportValidity();
                                     password.reportValidity();
                                 }

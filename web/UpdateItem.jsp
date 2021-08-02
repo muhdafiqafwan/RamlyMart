@@ -82,14 +82,14 @@
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec2">
-                            <form method="post" class="form-group" onsubmit="showAlertSuccessfulUpdate()" action="ItemController?action=updateItem" enctype="multipart/form-data">
+                            <form method="post" onreset="resetImg()" class="form-group" onsubmit="showAlertSuccessfulUpdate()" action="ItemController?action=updateItem" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="itemName">Item Name: </label>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]+$"  value="<c:out value="${item.itemName}"/>"  required>
+                                            <input type="text" name="itemName" id="itemName" pattern="^[a-zA-Z][a-zA-Z ]*$"  value="<c:out value="${item.itemName}"/>"  required>
                                             <input type="hidden" name="itemID" id="itemName" value="<c:out value="${item.itemID}"/>"/><br>
                                         </div>
                                     </center>
@@ -141,7 +141,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]+$" value="<c:out value="${item.itemDescription}"/>" required="required" />
+                                            <input type="text" name="itemDescription" id="itemDescription" pattern="^[a-zA-Z][a-zA-Z ]*$" value="<c:out value="${item.itemDescription}"/>" required="required" />
                                         </div>
                                     </center>
                                 </div>
@@ -151,7 +151,7 @@
                                         <label for="itemImg">Item Image (png/jpeg only): </label>
                                         <br>
                                         <center>    
-                                            <div class="img"><img src="data:image/jpg;base64,${item.base64Image}" id="output" width="90" height="150"/></div>
+                                            <div class="img"><img src="data:image/jpg;base64,${item.base64Image}"   id="output" width="90" height="150"/></div>
                                         </center>
                                     </div>
                                     <br>
@@ -165,7 +165,7 @@
                                 <div class="row" align="center">
                                     <br>
                                     <a href="ItemController?action=catalogue" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                    <input type="reset" class="btn btn-danger" value="Reset"></input>   <input type="submit"  class="btn btn-success" value="Update" ></input>
+                                    <input type="reset" class="btn btn-danger" value="Reset"></input>   <input type="submit"  class="btn btn-success" value="Update" onclick="formValidation()"></input>
                                 </div>
                             </form>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -178,7 +178,7 @@
                                         showConfirmButton: false,
                                         timer: 4500
                                     })
-                                }
+                                };
                                 
                                 var loadFile = function(event) {
                                 var output = document.getElementById('output');
@@ -187,6 +187,77 @@
                                     URL.revokeObjectURL(output.src) // free memory
                                     }
                                 };
+                                
+                                function resetImg() {
+                                    document.getElementById('output').src = "data:image/jpg;base64,${item.base64Image}";
+                                }
+                                
+                               function formValidation() {
+                                    var name = document.getElementById("itemName");
+                                    var nameValidity = name.validity;
+                                    var price = document.getElementById("itemPrice");
+                                    var priceValidity = price.validity;
+                                    var qty = document.getElementById("itemQty");
+                                    var qtyValidity = qty.validity;
+                                    var desc = document.getElementById("itemDescription");
+                                    var descValidity = desc.validity;
+                                    var img = document.getElementById("itemImg");
+                                    var imgValidity = img.validity;
+
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+                                    
+                                    if(priceValidity.valueMissing) {
+                                        price.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(priceValidity.patternMismatch) {
+                                        price.setCustomValidity("Must be whole number or decimal number. Must be greater than or equal to 1");
+                                    }
+                                    else {
+                                        price.setCustomValidity("");
+                                    }
+                                    
+                                    if(qtyValidity.valueMissing) {
+                                        qty.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(qtyValidity.patternMismatch) {
+                                        qty.setCustomValidity("Must be whole number. Must be greater than or equal to 0");
+                                    }
+                                    else {
+                                        qty.setCustomValidity('');
+                                    }
+                                    
+                                    if(descValidity.valueMissing) {
+                                        desc.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(descValidity.patternMismatch) {
+                                        desc.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        desc.setCustomValidity("");
+                                    }
+                                    
+                                    
+                                    if(imgValidity.valueMissing) {
+                                        img.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else {
+                                        img.setCustomValidity("");
+                                    }
+                                    
+                                    name.reportValidity();
+                                    price.reportValidity();
+                                    qty.reportValidity();
+                                    desc.reportValidity();
+                                    img.reportValidity();
+                                }
                             </script>
                         </div>
                         <!-- //first section -->
