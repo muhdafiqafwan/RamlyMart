@@ -118,6 +118,7 @@ public class OrderController extends HttpServlet {
             daoOrder.deleteOrder(orderID, payID);
             forward = ORDER_LIST_ADMIN;
             request.setAttribute("orders", daoOrder.getAllOrders());
+            request.setAttribute("successDeleteOrder", "Order Has Been Deleted");
         } 
         else if(action.equalsIgnoreCase("createOrder")) {
             double totalprice = Double.parseDouble(request.getParameter("total"));

@@ -42,6 +42,7 @@ public class PaymentController extends HttpServlet {
             daoPayment.deletePayment(id);
             forward = LIST_PAYMENT;
             request.setAttribute("payments", daoPayment.getAllPayment()); 
+            request.setAttribute("successDeletePayment", "Payment Has Been Deleted");
 	} 
         else if(action.equalsIgnoreCase("updatePayment")) { //ADMIN UPDATES PAYMENT STATUS	
             int id = Integer.parseInt(request.getParameter("id"));
