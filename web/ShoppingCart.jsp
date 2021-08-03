@@ -156,7 +156,7 @@
                                                         <div class="quantity buttons_added">
                                                             <form method="post" action="CartController?action=updateCart">
                                                                 <input type="button" value="-" class="minus">
-                                                                <input type="number" step="1" min="1" max="" minlength="1" maxlength="2" name="quantity" value="${item.getiQty()}" title="Qty" class="input-text qty text" size="4">
+                                                                <input type="number" step="1" min="1" max="99" name="quantity" value="${item.getiQty()}" title="Qty" class="input-text qty text" size="4">
                                                                 <input type="button" value="+" class="plus">
                                                                 <input type="hidden" name="id" value="${item.getitemID()}">
                                                                 <input type="submit" value="Update" class="btn btn-warning">
@@ -165,14 +165,16 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <div class="quantity buttons_added">
-                                                            <form method="post" action="CartController?action=updateCart">
+                                                            <form method="post" action="CartController?action=updateCart2">
                                                                 <input type="button" value="-" class="minus">
-                                                                <input type="number" step="1" min="1" max="" minlength="1" maxlength="2" name="quantity" value="${item.getiQty()}" title="Qty" class="input-text qty text" size="4">
+                                                                <input type="number" step="1" min="1" max="99" name="quantity" value="${item.getiQty()}" title="Qty" class="input-text qty text" size="4">
                                                                 <input type="hidden" value="+" class="plus">
                                                                 <input type="hidden" name="id" value="${item.getitemID()}">
                                                                 <input type="submit" value="Update" class="btn btn-warning">
                                                                 <br>
                                                                 <small style="color: red;">**<c:out value="${item.getitemName()}"/> Out Of Stock**</small>
+                                                                <br>
+                                                                <small style="color: red;">**Reach Max Quantity Of Stock**</small>
                                                             </form>
                                                         </div>
                                                     </c:otherwise>
@@ -209,19 +211,6 @@
                                     </c:if> 
                                 </center>        
                             </div>
-                            <c:set var="message" value="${requestScope.failAddItem}"/> 
-                            <c:if test="${message != null}">      
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'warning',
-                                        title: 'Quantity Entered Exceeds Item Stock!',
-                                        showConfirmButton: false,
-                                        timer: 3000
-                                    });
-                                </script>
-                            </c:if> 
                             <c:set var="message" value="${requestScope.successAddItem}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -256,6 +245,32 @@
                                         position: 'top-center',
                                         icon: 'success',
                                         title: 'Item Has Been Removed From Cart',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if> 
+                            <c:set var="message" value="${requestScope.failAddItem}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'warning',
+                                        title: 'Quantity Entered Exceeds Item Stock!',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if> 
+                            <c:set var="message" value="${requestScope.errorAddItem}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'error',
+                                        title: 'Item Out Of Stock!',
                                         showConfirmButton: false,
                                         timer: 3000
                                     });

@@ -172,6 +172,45 @@ public class CartController extends HttpServlet {
                 }
             }  
         }
+        if(action.equalsIgnoreCase("updateCart2")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            ItemCatalogue itemCatalogue = new ItemCatalogue();
+            cartList = (ArrayList<Integer>)cartSession.getAttribute("cartlist");
+            itemQuantity = (ArrayList<Integer>)cartSession.getAttribute("iQty"); 
+            qty = (ArrayList<Integer>)cartSession.getAttribute("qty"); 
+
+            boolean check = itemCatalogue.check(cartList, id);
+
+            for(int i=0; i<qty.size(); i++) {
+                if(cartList.get(i) == id) {
+                    amount = qty.get(i);
+                    daoItem.addStock(id, amount);
+                }
+            }
+
+            if(check) {
+                if(quantity < daoItem.getStock(id)) {
+                    for(int i=0; i<itemQuantity.size(); i++) {
+                        if(cartList.get(i) == id){
+                            itemQuantity.set(i, quantity);
+                            qty.set(i, quantity);
+                            daoItem.removeStock(id, quantity); //MINUS STOCK(DATABASE)WHEN ADDING ITEM TO CART
+                        }
+                    }
+                    cartSession.setAttribute("cartlist", cartList);
+                    cartSession.setAttribute("iQty", itemQuantity);
+                    cartSession.setAttribute("qty", qty);
+                    request.setAttribute("successUpdateItemQuantity","Item Quantity Has been Updated");
+                    forward = "CartController?action=viewcart";
+                }
+                else if(quantity == daoItem.getStock(id)) {
+                    daoItem.removeStock(id, amount);
+                    request.setAttribute("errorAddItem","Item Out Of Stock!");
+                    forward = "CartController?action=viewcart";
+                }
+            }  
+        }
         else if(action.equalsIgnoreCase("viewcart")) {   
             cartList = (ArrayList<Integer>)cartSession.getAttribute("cartlist");
             itemQuantity = (ArrayList<Integer>)cartSession.getAttribute("iQty");  
