@@ -89,7 +89,7 @@
                             <p align="center">Let's join Ramly Family now!
                                 <br>Already have an account?<b><a href="LoginCustomer.jsp"> Log In Here</a></b>
                             </p>
-                            <form id="ff" name="form1" method="post" action="CustomerController?action=registerCustomer" onsubmit="return passwordComparison()">
+                            <form method="post" action="CustomerController?action=registerCustomer" onsubmit="return passwordComparison()">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Name</label>
@@ -219,8 +219,6 @@
                                     <center>
                                         <div class="col-75">
                                             <input type="password" id="custPassword2" name="custPassword2" required>
-                                            <br>
-                                            <span id="messageMatch" style="color:red"> </span> <br>
                                         </div>
                                     </center>
                                 </div>
@@ -233,7 +231,7 @@
                                     <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="formValidation()">
                                 </div>
                             </form>
-                            <c:set var="message" value="${requestScope.fail}"/> 
+                            <c:set var="message" value="${requestScope.failRegister}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
@@ -242,8 +240,8 @@
                                         icon: 'error',
                                         title: 'Username/Email Has Been Used!',
                                         text: 'Please try another username or email',
-                                        showConfirmButton: true,
-                                        timer: 4500
+                                        showConfirmButton: false,
+                                        timer: 3000
                                     });
                                 </script>
                             </c:if>

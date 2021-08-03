@@ -31,6 +31,10 @@
                 padding: 12px 12px 12px 60px;
                 display: inline-block;
             }
+            small {
+                padding: 0px 12px 12px 60px;
+                display: inline-block;
+            }
             input[type=text], input[type=password]{
                 width: 90%;
                 padding: 12px;
@@ -81,31 +85,42 @@
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec2">
-                            <h3 class="agileinfo_sign">Log In </h3>
-                            <p align="center">Don't have an account?
-                                <b><a href="RegisterCustomer.jsp">Click here to register</a></b>
-                            </p>
-                            <form method="post" action="LoginController?action=loginCustomer">				  
+                            <h3 class="agileinfo_sign">Reset Password </h3>
+                            <form method="post" action="LoginController?action=resetPasswordCustomer" onsubmit="return passwordComparison()">				  
                                 <div class="row">
                                     <div class="col-25">
-                                        <label for="name">Username</label>
+                                        <label for="name">Email</label>
+                                        <br>
+                                        <small>Example: "aliabu@gmail.com"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custUsername" name="custUsername" pattern="[A-Za-z]+"required>
+                                            <input type="text" id="custEmail" name="custEmail" pattern="[a-z0-9._%+-]+@gmail.com" required>
                                         </div>
                                     </center>
                                 </div> 
                                 <div class="row">
                                     <div class="col-25">
-                                        <label for="name">Password</label>
+                                        <label for="name">New Password</label>
+                                        <br>
+                                        <small>Example: "Aliabu123"</small>
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="custPassword" name="custPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required> 
+                                            <input type="password" id="custNewPassword1" name="custNewPassword1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required> 
                                         </div>
                                     </center>
-                                </div>                    
+                                </div>  
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="name">Confirm New Password</label>
+                                    </div>
+                                    <center>
+                                        <div class="col-75">
+                                            <input type="password" id="custNewPassword2" name="custNewPassword2" required>
+                                        </div>
+                                    </center>
+                                </div>
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                     <br>
@@ -115,37 +130,7 @@
                                     <input type="reset" value="Reset">   <input type="submit" value="Login" onclick="formValidation()">
                                 </div>
                             </form>
-                            <br>
-                            <p align="center">Forgot password?
-                                <b><a href="ForgotPasswordCustomer.jsp">Click here</a></b>
-                            </p>
-                            <c:set var="message" value="${requestScope.successRegister}"/> 
-                            <c:if test="${message != null}">      
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Successfully Register Account',
-                                        showConfirmButton: false,
-                                        timer: 3000
-                                    });
-                                </script>
-                            </c:if>
-                            <c:set var="message" value="${requestScope.successResetPassword}"/> 
-                            <c:if test="${message != null}">      
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Successfully Reset Password ',
-                                        showConfirmButton: false,
-                                        timer: 3000
-                                    });
-                                </script>
-                            </c:if>
-                            <c:set var="message" value="${requestScope.failLogin}"/> 
+                            <c:set var="message" value="${requestScope.failResetPassword}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
@@ -153,27 +138,28 @@
                                         position: 'top-center',
                                         icon: 'error',
                                         title: 'User Not Found!',
-                                        text: 'Please try another username!',
+                                        text: 'Please try another email',
                                         showConfirmButton: false,
                                         timer: 3000
                                     });
                                 </script>
                             </c:if>
+                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
                                 function formValidation() {
-                                    var username = document.getElementById("custUsername");
-                                    var usernameValidity = username.validity;
-                                    var password = document.getElementById("custPassword");
+                                    var email = document.getElementById("custEmail");
+                                    var emailValidity = email.validity;
+                                    var password = document.getElementById("custNewPassword1");
                                     var passwordValidity = password.validity;
 
-                                    if(usernameValidity.valueMissing) {
-                                        username.setCustomValidity("Please fill out this field!");
+                                    if(emailValidity.valueMissing) {
+                                        email.setCustomValidity("Please fill out this field!");
                                     }
-                                    else if(usernameValidity.patternMismatch) {
-                                        username.setCustomValidity("Must be letters only!")
+                                    else if(emailValidity.patternMismatch) {
+                                        email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
                                     }
                                     else {
-                                        username.setCustomValidity("");
+                                        email.setCustomValidity('');
                                     }
                                     
                                     if(passwordValidity.valueMissing) {
@@ -187,18 +173,42 @@
                                     }
                                     else {
                                         password.setCustomValidity("");
-                                    }     
-                                    username.reportValidity();
+                                    }  
+                                    email.reportValidity();
                                     password.reportValidity();
                                 }
-                                function showPassword() {
-                                    var password = document.getElementById("custPassword");
+                                function passwordComparison() {  
+                                    var password1 = document.getElementById("custNewPassword1").value;  
+                                    var password2 = document.getElementById("custNewPassword2").value;  
 
-                                    if(password.type === "password") {
-                                        password.type = "text";
+                                    if(password1 !== password2)  {                              
+                                        Swal.fire({
+                                            position: 'top-center',
+                                            icon: 'error',
+                                            title: 'Password Did Not Match!',
+                                            showConfirmButton: true,
+                                            timer: 4500
+                                        });
+                                       return false; 
+                                    }
+                                    return true;
+                                }
+                                function showPassword() {
+                                    var password1 = document.getElementById("custNewPassword1");
+                                    var password2 = document.getElementById("custNewPassword2");
+
+                                    if(password1.type === "password") {
+                                        password1.type = "text";
                                     }
                                     else {
-                                        password.type = "password";
+                                        password1.type = "password";
+                                    }
+                                    
+                                    if(password2.type === "password") {
+                                        password2.type = "text";
+                                    }
+                                    else {
+                                        password2.type = "password";
                                     }
                                 }
                             </script>

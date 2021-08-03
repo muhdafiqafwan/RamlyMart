@@ -9,15 +9,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ramly.dao.AdminDAO;
-import ramly.dao.CustomerDAO;
 import ramly.dao.RiderDAO;
+import ramly.dao.CustomerDAO;
 import ramly.model.Admin;
-import ramly.model.Customer;
 import ramly.model.Rider;
+import ramly.model.Customer;
 
 public class LoginController extends HttpServlet {
+    private String HOMEPAGE_ADMIN = "HomepageAdmin.jsp"; 
+    private String LOGIN_ADMIN = "LoginAdmin.jsp"; 
+    private String HOMEPAGE_RIDER = "HomepageRider.jsp";
+    private String LOGIN_RIDER = "LoginRider.jsp"; 
+    private String HOMEPAGE_CUSTOMER = "HomepageCustomer.jsp";
+    private String LOGIN_CUSTOMER = "LoginCustomer.jsp"; 
+    private String FORGOTPASSWORD_CUSTOMER = "ForgotPasswordCustomer.jsp"; 
+    private AdminDAO daoAdmin;
+    private RiderDAO daoRider;
+    private CustomerDAO daoCustomer;
+    boolean check;
+    String forward = null;     
 
     public LoginController() {
+        super();
+        daoAdmin = new AdminDAO();
+        daoRider = new RiderDAO();
+        daoCustomer = new CustomerDAO();
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,41 +43,49 @@ public class LoginController extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 String custUsername = request.getParameter("custUsername");
                 String custPassword = request.getParameter("custPassword");
-                CustomerDAO db =  new CustomerDAO();
-                Customer customer = db.login(custUsername, custPassword);
+                Customer customer = daoCustomer.login(custUsername, custPassword);
 
                 if(customer != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", customer);
-                    request.setAttribute("in","Successfully Login");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageCustomer.jsp");
-                    requestDispatcher.forward(request, response);
+                    request.setAttribute("successLogin","Successfully Login");
+                    forward = HOMEPAGE_CUSTOMER;
                 }
                 else {
-                    request.setAttribute("error", "User not found! Please try again");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginCustomer.jsp");
-                    requestDispatcher.forward(request, response);
+                    request.setAttribute("failLogin", "User Not Found!");
+                    forward = LOGIN_CUSTOMER;
                 }
+            }
+        }
+        else if(action.equalsIgnoreCase("resetPasswordCustomer")) {
+            String custEmail = request.getParameter("custEmail");
+            String custPassword = request.getParameter("custNewPassword1");
+            check = daoCustomer.resetPassword(custEmail, custPassword);
+            
+            if(check) {
+                request.setAttribute("successResetPassword","Reset Password Successful");
+                forward = LOGIN_CUSTOMER;
+            }
+            else {
+                request.setAttribute("failResetPassword","User Not Found!");
+                forward = FORGOTPASSWORD_CUSTOMER;
             }
         }
         else if(action.equalsIgnoreCase("loginRider")) { 
             try (PrintWriter out = response.getWriter()) {
                 int riderID = Integer.parseInt(request.getParameter("riderID"));
                 String riderPassword = request.getParameter("riderPassword");
-                RiderDAO db =  new RiderDAO();
-                Rider rider = db.login(riderID, riderPassword);
+                Rider rider = daoRider.login(riderID, riderPassword);
 
                 if(rider != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", rider);
                     request.setAttribute("in","Successfully Login");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageRider.jsp");
-                    requestDispatcher.forward(request, response);
+                    forward = HOMEPAGE_RIDER;
                 }
                 else {
                     request.setAttribute("error", "User not found! Please try again");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginRider.jsp");
-                    requestDispatcher.forward(request, response);
+                    forward = LOGIN_RIDER;
                 }
             }
         }
@@ -69,22 +93,21 @@ public class LoginController extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 int adminID = Integer.parseInt(request.getParameter("adminID"));
                 String adminPassword = request.getParameter("adminPassword");
-                AdminDAO db =  new AdminDAO();
-                Admin admin = db.login(adminID, adminPassword);
+                Admin admin = daoAdmin.login(adminID, adminPassword);
 
                 if(admin != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("login", admin);
                     request.setAttribute("in","Successfully Login");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomepageAdmin.jsp");
-                    requestDispatcher.forward(request, response);
+                    forward = HOMEPAGE_ADMIN;
                 }
                 else {
                     request.setAttribute("error", "User not found! Please try again");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAdmin.jsp");
-                    requestDispatcher.forward(request, response);
+                    forward = LOGIN_ADMIN;
                 }
             }
         }
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(forward);
+        requestDispatcher.forward(request, response);
     }
 }

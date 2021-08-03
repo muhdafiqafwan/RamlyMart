@@ -263,4 +263,34 @@ public class CustomerDAO {
         }
         return cust;
     }	
+    public boolean resetPassword(String custEmail, String custPassword) {
+        String email = null;
+        String sql1 = "select CUSTEMAIL from CUSTOMER where CUSTEMAIL = '" + custEmail + "'";
+
+        try {
+            currentCon = ConnectionManager.getConnection();
+            stmt = currentCon.createStatement();
+            rs = stmt.executeQuery(sql1);
+
+            while(rs.next()) {
+                email = rs.getString("custEmail");
+            }
+
+            if(email != null) {
+                String sql2 = "Update CUSTOMER set CUSTPASSWORD = '" + custPassword + "'";
+
+                currentCon = ConnectionManager.getConnection();
+                stmt = currentCon.createStatement();
+                stmt.executeUpdate(sql2);
+                return true;
+            }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+
+    

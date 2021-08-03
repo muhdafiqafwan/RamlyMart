@@ -59,7 +59,7 @@
                                         <p>What would you like to order today?</p>
                                 </div>
                             </center> 
-                            <c:set var="message" value="${requestScope.in}"/> 
+                            <c:set var="message" value="${requestScope.successLogin}"/> 
                             <c:if test="${message != null}">    
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>

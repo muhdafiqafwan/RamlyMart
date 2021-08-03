@@ -116,12 +116,12 @@ public class CustomerController extends HttpServlet {
             if(!customer.isValid()) {
                 daoCustomer.add(customer);
                 forward = LOGIN_CUSTOMER;
-                request.setAttribute("success", "Register Successful");
+                request.setAttribute("successRegister", "Register Successful");
             }
             else {
                 daoCustomer.updateCustomer(customer);
                 forward = REGISTER_CUSTOMER;
-                request.setAttribute("fail", "Username/Email Has Been Used");
+                request.setAttribute("failRegister", "Username/Email Has Been Used");
             }
         }
         else if(action.equalsIgnoreCase("updateCustomer"))  { //CUSTOMER UOPDATES PROFILE   
