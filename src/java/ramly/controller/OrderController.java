@@ -193,6 +193,7 @@ public class OrderController extends HttpServlet {
             request.setAttribute("order", daoOrder.getOrderById(orderID));
             request.setAttribute("carts", daoCart.getAllCart(orderID));
             request.setAttribute("customer", daoCustomer.getCustomerByOrder(orderID));
+            request.setAttribute("successUpdateOrder", "Order Has Been Delivered");
         }
         else if (action.equalsIgnoreCase("checkout")){ //COD CHECKOUT
             Payment payment;

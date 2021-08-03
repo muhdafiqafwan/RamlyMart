@@ -128,6 +128,19 @@
                             <center>
                                 <a href="OrderController?action=listOrderAdmin"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                             </center>
+                            <c:set var="message" value="${requestScope.successUpdateOrder}"/> 
+                            <c:if test="${message != null}">        
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Update Order',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
                         </div>
                         <!-- //first section -->
                     </div>

@@ -65,7 +65,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <div style="  margin: auto; width: 70%; padding-left: 10%; padding-right: 10%;">
-                                <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()"   action="OrderController?action=updateOrderAdmin" style="margin: 0; padding: 0;">         
+                                <form id="ff" name="form1" method="post" action="OrderController?action=updateOrderAdmin" style="margin: 0; padding: 0;">         
                                     <table class="table table-borderless">
                                         <tbody>
                                             <tr>
@@ -146,18 +146,6 @@
                                     </center>
                                     <br><br>
                                 </form>
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    function showAlertSuccessfulUpdate() {
-                                        Swal.fire({
-                                            position: 'top-center',
-                                            icon: 'success',
-                                            title: 'Customer order status update successful!',
-                                            showConfirmButton: false,
-                                            timer: 4500
-                                        });
-                                    }
-                                </script>
                             </div>
                         </div>
                         <!-- //first section -->
