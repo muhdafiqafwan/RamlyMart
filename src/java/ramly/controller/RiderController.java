@@ -138,6 +138,7 @@ public class RiderController extends HttpServlet {
             session.setAttribute("login", rider);
             forward = VIEW_STATUS_RIDER;
             request.setAttribute("rider", rider); 
+            request.setAttribute("successUpdateStatus", "Successfully Update Status"); 
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);

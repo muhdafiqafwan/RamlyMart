@@ -123,7 +123,7 @@
                     <center>
                         <div class="card">
                             <div class="card-body">           
-                                <form name="formsttatus" method="post" id="ff" action="RiderController?action=manageStatus" onsubmit="showAlertSuccessfulUpdate()">
+                                <form name="formsttatus" method="post" id="ff" action="RiderController?action=manageStatus">
                                     <div class="row">
                                         <div class="col-25">
                                             <label for="name">Rider Name:</label>
@@ -154,18 +154,6 @@
                                     </center>
                                     <br><br>
                                 </form>
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                 function showAlertSuccessfulUpdate() {
-                                    Swal.fire({
-                                    position: 'top-center',
-                                    icon: 'success',
-                                    title: 'Status update successfully',
-                                    showConfirmButton: false,
-                                    timer: 4500
-                                    })
-                                }
-                                </script>   
                             </div>
                         </div>
                     </center>

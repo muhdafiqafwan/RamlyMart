@@ -135,6 +135,7 @@
                                         timer: 3000
                                     });
                                 </script>
+                           </c:if>
                             <c:set var="message" value="${requestScope.successResetPassword}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -161,7 +162,6 @@
                                         timer: 3000
                                     });
                                 </script>
-                            </c:if>
                             </c:if>
                             <script>
                                 function formValidation() {
