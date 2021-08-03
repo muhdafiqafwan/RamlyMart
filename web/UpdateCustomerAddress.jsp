@@ -149,7 +149,7 @@
                                     <div style="background-color: #f9f9f9">
                                     <br>
                                     <p style=" color: #000; font-weight: 600"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Delivery Address </p>
-                                    <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="CustomerController?action=UpdateCustomerAddress&total=${totalprice}">
+                                    <form id="ff" name="form1" method="post" action="CustomerController?action=UpdateCustomerAddress&total=${totalprice}">
                                     <input type="text" name="custID" id="custID" value="<%=cust.getCustID()%>" readonly hidden><br>
                                     <div class="row">
                                         <div class="col-25">
@@ -218,7 +218,7 @@
                                     <center>
                                         <br><br>
                                         <a href="OrderController?action=createOrder&total=${totalprice}" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                        <input type="submit" value="Update" onclick="formValidation()" class="btn btn-success">
+                                        <input type="submit" value="Update" class="btn btn-success" onclick="formValidation()">
                                         <br><br>
                                     </center>
                                 </form>
@@ -226,25 +226,6 @@
                             </div>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showAlertSuccessfulUpdate() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Information update successfully',
-                                        showConfirmButton: false,
-                                        timer: 4500
-                                    });
-                                }
-                               function showPassword() {
-                                    var x = document.getElementById("custPassword")
-
-                                    if(x.type === "password") {
-                                        x.type = "text";
-                                    }
-                                    else {
-                                        x.type = "password";
-                                    }
-                                }
                                 function formValidation() {
                                     var phone = document.getElementById("custPhone");
                                     var phoneValidity = phone.validity;
@@ -328,6 +309,16 @@
                                     city.reportValidity();
                                     state.reportValidity();
                                     postcode.reportValidity();
+                                }
+                                function showPassword() {
+                                    var password = document.getElementById("custPassword")
+
+                                    if(password.type === "password") {
+                                        password.type = "text";
+                                    }
+                                    else {
+                                        password.type = "password";
+                                    }
                                 }
                             </script>         
                         </div>

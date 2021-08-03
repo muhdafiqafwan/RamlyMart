@@ -170,6 +170,19 @@
                             </div>  
                              <!-- Payment method end -->
                             <!-- start alert cod -->
+                            <c:set var="message" value="${requestScope.successUpdateAddress}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Update Address',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if> 
                              <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                              <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
                              <script>

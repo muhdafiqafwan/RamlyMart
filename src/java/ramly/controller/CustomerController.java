@@ -186,6 +186,7 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("totalprice", totalprice);
             request.setAttribute("customer", customer); 
             forward = VIEW_PAYMENT;
+            request.setAttribute("successUpdateAddress", "Successfully Update Address"); 
         }
 	RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
