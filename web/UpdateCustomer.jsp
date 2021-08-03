@@ -111,7 +111,7 @@
                     <br>
                     <div class="card">
                         <div class="card-body">        
-                            <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="CustomerController?action=updateCustomer">
+                            <form method="post" action="CustomerController?action=updateCustomer">
                                 <center>
                                     <div class="row">
                                         <div class="col-25">
@@ -221,34 +221,15 @@
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                 </div>
+                                <center>
+                                    <br><br>
+                                    <a href="CustomerController?action=viewCustomer&id=<%=cust.getCustID()%>" class="btn btn-warning" style="font-size: 17px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                                    <input type="submit" value="Update" class="btn btn-success" style="font-size: 17px;" onclick="formValidation()"> 
+                                    <br><br>
+                                </center> 
                             </form>
-                            <center>
-                                <br><br>
-                                <button style="font-size: 17px;" onclick="history.back();" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-                                <input style="font-size: 17px;" type="submit" form="ff" value="Update" onclick="formValidation()" class="btn btn-success"> 
-                                <br><br>
-                            </center> 
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showAlertSuccessfulUpdate() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Profile update successfully',
-                                        showConfirmButton: false,
-                                        timer: 4500
-                                    });
-                                }
-                                function showPassword() {
-                                    var x = document.getElementById("custPassword")
-
-                                    if(x.type === "password") {
-                                        x.type = "text";
-                                    }
-                                    else {
-                                        x.type = "password";
-                                    }
-                                }
                                 function formValidation() {
                                     var name = document.getElementById("custName");
                                     var nameValidity = name.validity;
@@ -373,6 +354,16 @@
                                     postcode.reportValidity();
                                     username.reportValidity();
                                     password.reportValidity();
+                                }
+                                function showPassword() {
+                                    var password = document.getElementById("custPassword")
+
+                                    if(password.type === "password") {
+                                        password.type = "text";
+                                    }
+                                    else {
+                                        password.type = "password";
+                                    }
                                 }
                             </script>        
                         </div>

@@ -63,19 +63,6 @@
         }
     %>
     <body>
-        <c:set var="customer" value="${requestScope.cust}"/> 
-        <c:if test="${customer != null}">      
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-            <script>
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Profile Update Successful',
-                    showConfirmButton: false,
-                    timer: 4500
-                });
-            </script>
-        </c:if>
         <!-- header-bot-->
         <%@ include file="CustNav.jsp" %>
         <!-- //header lists -->
@@ -130,8 +117,21 @@
                                 </tr>    
                             </table>
                             <center>
-                                <a href="CustomerController?action=updateCustomer&id=<%=cust.getCustID()%>"><button style="font-size: 17px;" class="btn btn-success">Edit</button></a>
-                            </center>                            
+                                <a href="CustomerController?action=updateCustomer&id=<%=cust.getCustID()%>"><button class="btn btn-success" style="font-size: 17px;">Edit</button></a>
+                            </center>
+                            <c:set var="message" value="${requestScope.successUpdateProfile}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Update Profile',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>                            
                         </div>
                         <!-- //first section -->
                     </div>

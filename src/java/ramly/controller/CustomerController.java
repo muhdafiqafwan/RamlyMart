@@ -151,7 +151,7 @@ public class CustomerController extends HttpServlet {
             session.setAttribute("login", customer);
             forward = VIEW_CUSTOMER;
             request.setAttribute("customer", customer); 
-            request.setAttribute("cust", "Profile Update Successful"); 
+            request.setAttribute("successUpdateProfile", "Successfully Update Profile"); 
         }
         else if(action.equalsIgnoreCase("updateCustomerAddress")) { //CUSTOMER UPDATES ADDRESS FOR DELIVERY    
             int custID = Integer.parseInt(request.getParameter("custID"));
