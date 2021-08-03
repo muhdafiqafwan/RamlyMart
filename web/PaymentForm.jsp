@@ -139,11 +139,13 @@
                                             <th> RM 5.00 </th>
                                         </tr>
                                         <tr>
-                                            <th colspan=4 class="timetable_pay2"> TOTAL </th>
+                                            <th colspan=4 class="timetable_pay2"><b>TOTAL PRICE</b></th>
                                             <th> 
+                                                <b>
                                                 <c:set var="grandtotal" value="${0}"/>
                                                 <c:set var="grandtotal" value="${totalprice + 5.0}"/>
                                                 RM<c:out value="${grandtotal}"/>
+                                                </b>
                                             </th>
                                         </tr>		
                                     </table>

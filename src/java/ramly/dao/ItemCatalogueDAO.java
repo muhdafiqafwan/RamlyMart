@@ -263,7 +263,7 @@ public class ItemCatalogueDAO {
             return row;
 	}
       // <!-- AFIQ - Start. Tolak stock dlm database bila cust add dlm cart  -->
-        public void minusStock(int id, int qty) {
+        public void removeStock(int id, int qty) {
 	    String searchQuery = "UPDATE ITEMCATALOGUE SET ITEMQTY = ITEMQTY - " + qty  + " WHERE ITEMID = '" + id + "'";
 		
 		System.out.println(searchQuery);
@@ -300,6 +300,25 @@ public class ItemCatalogueDAO {
 		
 	}
       // <!-- AFIQ - End. -->
+        
+    public int getStock(int id) {
+        int quantityStock = 0;
+        String sql = "select ITEMQTY from ITEMCATALOGUE where ITEMID = '" + id + "'";
+        
+        try {
+            currentCon = ConnectionManager.getConnection();
+            stmt = currentCon.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            if(rs.next()) {
+                quantityStock = rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantityStock;
+    }
         
     public ItemCatalogue getItemById (int itemID, int qty){
         

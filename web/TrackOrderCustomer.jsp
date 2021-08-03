@@ -42,7 +42,16 @@
     <body>
         <c:set var="order" value="${requestScope.orders}"/> 
         <c:if test="${order.isEmpty()}">      
-            <body onload="showAlert()"></body>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script>
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'warning',
+                    title: 'No orders to track',
+                    showConfirmButton: false,
+                    timer: 5000
+                });
+            </script>
         </c:if>
 	<!-- header-bot-->
 	<%@ include file="CustNav.jsp" %>
@@ -81,31 +90,19 @@
                                         <td><c:out value="${order.orderDeliveryDate}" /></td>
                                         <td><c:out value="${order.orderDeliveryTime}" /></td> 
                                         <td>
-                                            <a href="PaymentController?action=viewReceipt&id=${order.payID}"><button class="btn btn-info">View Receipt</button></a>
+                                            <a href="PaymentController?action=viewReceipt&id=${order.payID}"><button class="btn btn-info" style="font-size:16px;">View Receipt</button></a>
                                             <c:choose>
                                                 <c:when test="${order.orderStatus.equalsIgnoreCase('Delivering')}"> 
-                                                    <a href="AssignRiderController?action=viewRider&orderID=${order.orderID}&riderID=${order.riderID}"><button class="btn btn-warning">View Rider</button></a>
+                                                    <a href="AssignRiderController?action=viewRider&orderID=${order.orderID}&riderID=${order.riderID}"><button class="btn btn-warning" style="font-size:16px;">View Rider</button></a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <button class="btn btn-warning" disabled>View Rider</button>
+                                                    <button class="btn btn-warning" style="font-size:16px;" disabled>View Rider</button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>	  
                             </table>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script>
-                                function showAlert() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'warning',
-                                        title: 'No orders to track',
-                                        showConfirmButton: false,
-                                        timer: 5000
-                                    });
-                                }
-                            </script>
                         </div>
                         <!-- //first section -->
                     </div>

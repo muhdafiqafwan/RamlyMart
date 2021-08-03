@@ -112,8 +112,8 @@
                                         <th> RM 5.00 </th>
                                     </tr>
                                     <tr>
-                                        <th colspan=3 class="timetable_pay2"> TOTAL</th>
-                                        <th><c:out value="${payment.payAmount}"/></th>
+                                        <th colspan=3 class="timetable_pay2"><b>TOTAL PRICE</b></th>
+                                        <th><b><c:out value="${payment.payAmount}"/></b></th>
                                     </tr>		
                                 </table>
                             </div>

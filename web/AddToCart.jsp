@@ -157,12 +157,22 @@
                                                             <c:out value="${item.itemQty}"/> more left
                                                         </div>
                                                         <br><br><br>
-                                                        <c:if test="${item.itemQty >= 1}">
-                                                            <a href="CartController?action=addToCart&id=${item.getitemID()}"><button class="btn btn-info" onclick="showAlertSuccessfulAdd()">Add To Cart</button></a>
-                                                        </c:if>
-                                                        <c:if test="${item.itemQty < 1}">
-                                                            <center><div class="item-status sold-out">SOLD OUT</div></center>
-                                                        </c:if>
+                                                        <table>
+                                                            <tr>
+                                                                <c:choose>
+                                                                    <c:when test="${item.itemQty >= 1}">
+                                                                        <td>
+                                                                            <a href="CartController?action=addToCart&id=${item.getitemID()}"><button class="btn btn-info" onclick="add(event)">Add To Cart</button></a>
+                                                                        </td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>
+                                                                            <button class="item-status sold-out" disabled>SOLD OUT</button>
+                                                                        </td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </tr>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,15 +181,22 @@
                                 </div>
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
-                                    function showAlertSuccessfulAdd() {
-                                        Swal.fire({
-                                            position: 'top-center',
-                                            icon: 'success',
-                                            title: 'Item added successfully',
-                                            showConfirmButton: false,
-                                            timer: 4500
-                                        });
-                                    }
+                                function add(event){
+                                    event.preventDefault();   
+                                    Swal.fire({
+                                        title: 'Are You Sure?',
+                                        text: "Do you want to add this item to cart",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = event.target.offsetParent.children[0].href;
+                                        }
+                                    })
+                                 }
                                 </script>	
                             </div>
                         </center>

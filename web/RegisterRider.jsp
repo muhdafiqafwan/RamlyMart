@@ -216,7 +216,7 @@
                                         phone.setCustomValidity("Please fill out this field!");
                                     }
                                     else if(phoneValidity.patternMismatch) {
-                                        phone.setCustomValidity("Must be digits only and please use the correct format! Example: xxx-xxxxxxx ");
+                                        phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx");
                                     }
                                     else if(phoneValidity.tooLong) {
                                         phone.setCustomeValidity("Phone number entered exceeds 11 digits!");

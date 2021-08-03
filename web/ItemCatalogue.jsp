@@ -68,7 +68,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <!-- untuk keluarkan semua image-->
-                            <a href="AddItem.jsp"><button class="btn btn-success" ><span class="fa fa-plus-circle" aria-hidden="true"></span>  Add New Item</button></a>
+                            <a href="AddItem.jsp"><button class="btn btn-success" ><span class="fa fa-plus-circle" aria-hidden="true"></span> Add New Item</button></a>
                             <br><br>
                             <table class="timetable_pay">                     
                                 <tr>      
@@ -92,7 +92,7 @@
                                         <td><c:out value="${item.itemDescription}"/></td> 
                                         <td colspan="3">
                                             <a href="ItemController?action=updateItem&id=<c:out value="${item.itemID}"/>"><button class="btn btn-warning">Update</button></a>
-                                            <a href="ItemController?action=deleteItem&id=<c:out value="${item.itemID}"/>"><button onclick="del(event)" class="btn btn-danger">Delete</button></a>
+                                            <a href="ItemController?action=deleteItem&id=<c:out value="${item.itemID}"/>"><button class="btn btn-danger" onclick="del(event)">Delete</button></a>
                                         </td>
                                     </tr>
                                 </c:forEach> 
@@ -100,27 +100,27 @@
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
                                 function del(event){
-                                 event.preventDefault();   
-                                 Swal.fire({
-                                   title: 'Are you sure?',
-                                   text: "Do you really want to delete these item? This process cannot be undone.",
-                                   icon: 'warning',
-                                   showCancelButton: true,
-                                   confirmButtonColor: '#3085d6',
-                                   cancelButtonColor: '#d33',
-                                   confirmButtonText: 'Yes'
-                                 }).then((result) => {
-                                   if (result.isConfirmed) {
-                                         Swal.fire({
-                                         position: 'top-center',
-                                         icon: 'success',
-                                         title: 'Order has been placed',
-                                         showConfirmButton: false,
-                                         timer: 3000
-                                         });
-                                     window.location.href = event.target.offsetParent.children[1].href;
-                                   }
-                                 })
+                                    event.preventDefault();   
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "Do you really want to delete this item? This process cannot be undone",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                                position: 'top-center',
+                                                icon: 'success',
+                                                title: 'Item Has Been Deleted',
+                                                showConfirmButton: false,
+                                                timer: 4500
+                                            });
+                                            window.location.href = event.target.offsetParent.children[1].href;
+                                        }
+                                    })
                                  }
                             </script>	
                         </div>

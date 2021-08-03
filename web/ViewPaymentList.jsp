@@ -92,76 +92,96 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <center>
-                                <form name="form1" method="post" id="ff" action="PaymentController?action=searchID">
-                                    <input type="search" name="searchOrder" id="searchOrder" placeholder= "Enter order ID to search order" class="search-Fill">
+                                <form method="post" action="PaymentController?action=searchID">
+                                    <input type="search" id="searchOrder" name="searchOrder" placeholder= "Enter order ID to search order" class="search-Fill">
                                     <input type="submit" value="Search" class="submit-Search">
                                 </form>
                             </center>
-                                <br>
-                                <form name="form1" method="post" onsubmit="setFilter()" id="ff" action="PaymentController?action=filterItem">
-                                    <select name="filter" id="filter" class="filter-Fill">
-                                        <option>All</option>
-                                        <option>COD</option>
-                                        <option>Online Payment</option>
-                                        <option>Paid</option>
-                                        <option>Unpaid</option>
-                                    </select>
-                                    <input type="submit" value="Filter" class="submit-Filter">
-                                </form>
-                                <br>
-                            <center>
-                                <table class="timetable_pay">
-                                    <tr>
-                                        <th>Order ID</th>
-                                        <th>Payment Amount(RM)</th>
-                                        <th>Payment Type</th>
-                                        <th>Payment Status</th>
-                                        <th colspan="3">Actions</th>
-                                    </tr>
-                                    <c:choose>
-                                        <c:when test="${empty payments}">
-                                            <td colspan="5" style="font-size: 20px; align-content: center;"><c:out value="No result found"/></td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:forEach var="payment" items="${payments}">
-                                                <tr>
-                                                    <td><c:out value="${payment.orderID}"/></td>                                  
-                                                    <td><c:out value="${payment.payAmount}"/></td>
-                                                    <td><c:out value="${payment.payType}"/></td>
-                                                    <td><c:out value="${payment.payStatus}"/></td> 
-                                                    <td colspan="3">
-                                                        <a href="PaymentController?action=viewPayment&id=${payment.payID}" class="btn btn-info">View</a>
-                                                        <a href="PaymentController?action=updatePayment&id=${payment.payID}" class="btn btn-warning">Update</a>
-                                                        <a href="PaymentController?action=deletePayment&id=${payment.payID}" class="btn btn-danger">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </table>
-                            </center>
-                           <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                            <br>
+                            <form method="post" action="PaymentController?action=filterItem" onsubmit="setFilter()">
+                                <select name="filter" id="filter" class="filter-Fill">
+                                    <option>All</option>
+                                    <option>COD</option>
+                                    <option>Online Payment</option>
+                                    <option>Paid</option>
+                                    <option>Unpaid</option>
+                                </select>
+                                <input type="submit" value="Filter" class="submit-Filter">
+                            </form>
+                            <br>
+                            <table class="timetable_pay">
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Payment Amount(RM)</th>
+                                    <th>Payment Type</th>
+                                    <th>Payment Status</th>
+                                    <th colspan="3">Actions</th>
+                                </tr>
+                                <c:choose>
+                                    <c:when test="${empty payments}">
+                                        <td colspan="5">
+                                            <p style="font-size: 20px; align-content: center;"><b>No Results Found</b></p>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="payment" items="${payments}">
+                                            <tr>
+                                                <td><c:out value="${payment.orderID}"/></td>                                  
+                                                <td><c:out value="${payment.payAmount}"/></td>
+                                                <td><c:out value="${payment.payType}"/></td>
+                                                <td><c:out value="${payment.payStatus}"/></td> 
+                                                <td colspan="3">
+                                                    <a href="PaymentController?action=viewPayment&id=${payment.payID}" class="btn btn-info" style="font-size:16px;">View</a>
+                                                    <a href="PaymentController?action=updatePayment&id=${payment.payID}" class="btn btn-warning" style="font-size:16px;">Update</a>
+                                                    <a href="PaymentController?action=deletePayment&id=${payment.payID}" class="btn btn-danger" style="font-size:16px;" onclick="del(event)">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                            </table>
+                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                             <script>
                                 function setFilter(){
                                     var value = document.getElementById('filter').value;
                                     localStorage.setItem("select", value); 
-                                }
-                                
+                                }                                
                                 function getFilter(){
-                                    if (localStorage.getItem("select") != null) {
+                                    if(localStorage.getItem("select") != null) {
                                           return localStorage.getItem("select");
                                     }
                                     else {
                                         return "All";
                                     }
                                 }
-                                
-                                document.getElementById('filter').value = getFilter();
-                                 
+                                document.getElementById('filter').value = getFilter();                               
                                 function resetFilter() {
                                    localStorage.removeItem("select");
                                 }
+                                function del(event){
+                                    event.preventDefault();   
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "Do you really want to delete this payment? This process cannot be undone",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                                position: 'top-center',
+                                                icon: 'success',
+                                                title: 'Payment Has Been Deleted',
+                                                showConfirmButton: false,
+                                                timer: 4500
+                                            });
+                                            window.location.href = event.target.offsetParent.children[2].href;
+                                        }
+                                    })
+                                 }
                             </script>
                         </div>
                         <!-- //first section -->

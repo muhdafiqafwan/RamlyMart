@@ -103,11 +103,13 @@
                                         <th> RM 5.00 </th>
                                     </tr>
                                     <tr>
-                                        <th colspan=4 class="timetable_pay2"><b> TOTAL </b></th>
-                                        <th> 
+                                        <th colspan=4 class="timetable_pay2"><b>TOTAL PRICE</b></th>
+                                        <th>
+                                            <b>
                                             <c:set var="grandtotal" value="${0}"/>
                                             <c:set var="grandtotal" value="${totalprice + 5.0}"/>
                                             RM<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${grandtotal}"/>
+                                            </b>
                                         </th>
                                     </tr>		
                                 </table>

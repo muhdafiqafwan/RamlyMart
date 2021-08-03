@@ -31,6 +31,10 @@
             * {
               box-sizing: border-box;
             }
+            label {
+              padding: 12px 12px 12px 60px;
+              display: inline-block;
+            }
             input[type=text], select{
               width: 90%;
               padding: 12px;
@@ -38,9 +42,8 @@
               border-radius: 4px;
               resize: vertical;
             }
-            label {
-              padding: 12px 12px 12px 60px;
-              display: inline-block;
+            input:focus {
+                outline: none;
             }
             input[readonly] {
                 color: graytext;
@@ -130,7 +133,7 @@
                                             <select name="payStatus">
                                                 <option value="UNPAID">UNPAID</option>
                                                 <option value="PAID">PAID</option>
-                                            </select><!-- comment -->
+                                            </select>
                                         </div>
                                     </center>
                                 </div>

@@ -72,8 +72,7 @@ public class OrderController extends HttpServlet {
             forward = ORDER_LIST_RIDER;
             request.setAttribute("orders", daoOrder.getAllOrderRider(riderID));
         }
-        else if(action.equalsIgnoreCase("listOrderAdmin")) //ADMIN VIEWS LIST OF CUSTOMER ORDER
-        {
+        else if(action.equalsIgnoreCase("listOrderAdmin")) { //ADMIN VIEWS LIST OF CUSTOMER ORDER
             forward = ORDER_LIST_ADMIN;
             request.setAttribute("orders", daoOrder.getAllOrders());
         }

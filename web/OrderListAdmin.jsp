@@ -33,10 +33,6 @@
         }
     %>
     <body>
-        <c:set var="order" value="${requestScope.orders}"/>
-        <c:if test="${order.isEmpty()}">      
-            <body onload="showAlert()"></body>
-        </c:if>
 	<!-- header-bot-->
         <%@ include file="AdminNav.jsp" %>
 	<!-- //header-bot -->
@@ -58,44 +54,63 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <table class="timetable_pay">
-                                <thead>
-                                    <tr>
-                                        <th>Order Number</th>
-                                        <th>Status</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th colspan="3">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${orders}" var="order">
-                                        <tr>
-                                            <td><c:out value="${order.orderID}"/></td>                                   
-                                            <td><c:out value="${order.orderStatus}"/></td>
-                                            <td>RM<c:out value="${order.orderTotalPrice}"/></td>
-                                            <td><c:out value="${order.orderDeliveryDate}"/></td> 
-                                            <td><c:out value="${order.orderDeliveryTime}"/></td>
-                                            <td colspan="3">
-                                                <a href="OrderController?action=viewOrderAdmin&id=${order.orderID}" class="btn btn-info">View</a>
-                                                <a href="OrderController?action=updateOrderAdmin&id=${order.orderID}" class="btn btn-warning">Update</a>
-                                                <a href="OrderController?action=deleteOrderAdmin&id=${order.orderID}&pId=${order.getPayID()}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
+                                <tr>
+                                    <th>Order Number</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th colspan="3">Actions</th>
+                                </tr>
+                                <c:choose>
+                                    <c:when test="${empty orders}">
+                                        <td colspan="6">
+                                            <p style="font-size: 20px; align-content: center;"><b>No Results Found</b></p>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="order" items="${orders}">
+                                            <tr>
+                                                <td><c:out value="${order.orderID}"/></td>                                   
+                                                <td><c:out value="${order.orderStatus}"/></td>
+                                                <td>RM<c:out value="${order.orderTotalPrice}"/></td>
+                                                <td><c:out value="${order.orderDeliveryDate}"/></td> 
+                                                <td><c:out value="${order.orderDeliveryTime}"/></td>
+                                                <td colspan="3">
+                                                    <a href="OrderController?action=viewOrderAdmin&id=${order.orderID}" class="btn btn-info" style="font-size:16px;">View</a>
+                                                    <a href="OrderController?action=updateOrderAdmin&id=${order.orderID}" class="btn btn-warning" style="font-size:16px;">Update</a>
+                                                    <a href="OrderController?action=deleteOrderAdmin&id=${order.orderID}&pId=${order.getPayID()}" class="btn btn-danger" style="font-size:16px;" onclick="del(event)">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                             </table>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showAlert() {
+                                function del(event){
+                                    event.preventDefault();   
                                     Swal.fire({
-                                        position: 'top-center',
+                                        title: 'Are you sure?',
+                                        text: "Do you really want to delete this order? This process cannot be undone",
                                         icon: 'warning',
-                                        title: 'No orders to display',
-                                        showConfirmButton: false,
-                                        timer: 5000
-                                    });
-                                }
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                                position: 'top-center',
+                                                icon: 'success',
+                                                title: 'Order Has Been Deleted',
+                                                showConfirmButton: false,
+                                                timer: 4500
+                                            });
+                                            window.location.href = event.target.offsetParent.children[2].href;
+                                        }
+                                    })
+                                 }
                             </script>
                         </div>
                         <!-- //first section -->

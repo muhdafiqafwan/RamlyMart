@@ -76,7 +76,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Add Item</h3>
-                            <form method="post" class="form-group" action="ItemController?action=addItem" onsubmit="showAlertSuccessfulAdd()" enctype="multipart/form-data">
+                            <form method="post" action="ItemController?action=addItem" class="form-group" onsubmit="showAlertSuccessfulAdd()" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="itemName">Item Name: </label>
