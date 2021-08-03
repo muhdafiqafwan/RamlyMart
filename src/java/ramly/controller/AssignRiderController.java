@@ -53,7 +53,7 @@ public class AssignRiderController extends HttpServlet {
             int orderID = Integer.parseInt(request.getParameter("orderID"));
             daoAssignRider.updateRiderOrderStatus(riderID, orderID);
             forward = "AssignRiderController?action=listRider";         
-            request.setAttribute("alertMsg", "Rider has been assigned");
+            request.setAttribute("successAssignRider", "Rider Has Been Assigned");
         }
         else if (action.equalsIgnoreCase("viewRider")) { //CUSTOMER VIEW RIDER
             int riderID = Integer.parseInt(request.getParameter("riderID"));

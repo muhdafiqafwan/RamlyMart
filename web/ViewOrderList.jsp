@@ -70,10 +70,6 @@
         }
     %>
     <body>
-        <c:set var="order" value="${requestScope.orders}"/>
-        <c:if test="${order.isEmpty()}"> 
-            <body onload="showAlert()"></body>
-        </c:if>
 	<!-- header-bot-->
 	<%@ include file="AdminNav.jsp" %>
 	<!-- //header-bot -->
@@ -124,18 +120,19 @@
                                 <center>
                                     <a href="AssignRiderController?action=listRider"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                                 </center>
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    function showAlert() {
+                                <c:set var="message" value="${requestScope.orders}"/>
+                                <c:if test="${message.isEmpty()}"> 
+                                    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                    <script>
                                         Swal.fire({
                                             position: 'top-center',
                                             icon: 'warning',
-                                            title: 'No orders to display',
+                                            title: 'No Orders To Display',
                                             showConfirmButton: false,
                                             timer: 5000
                                         });
-                                    }
-                                </script>
+                                    </script>
+                                </c:if>
                             </div>
                             <!-- //first section -->
                         </div>

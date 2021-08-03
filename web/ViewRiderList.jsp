@@ -70,10 +70,6 @@
         }
     %>
     <body onload="resetFilter()">
-        <c:set var="message" value="${requestScope.alertMsg}"/> 
-        <c:if test="${message != null}">      
-            <body onload="showAlert()"></body>
-        </c:if>
 	<!-- header-bot-->
 	<%@ include file="AdminNav.jsp" %>
 	<!-- //header-bot -->
@@ -134,19 +130,21 @@
                                 </table>
                             </center> 
                             <br> 
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                            <script>
-                                function showAlert() {
+                            <c:set var="message" value="${requestScope.successAssignRider}"/> 
+                            <c:if test="${message != null}">   
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
                                     Swal.fire({
                                         position: 'top-center',
                                         icon: 'success',
-                                        title: 'Rider has been assigned',
+                                        title: 'Rider Has Been Assigned',
                                         showConfirmButton: false,
-                                        timer: 5000
+                                        timer: 3000
                                     });
-                                }
-                                
+                                </script>
+                            </c:if>
+                            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                            <script>
                                 function setFilter(){
                                     var value = document.getElementById('filter').value;
                                     localStorage.setItem("select", value); 
