@@ -135,7 +135,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d.*]{1,},[^\S][\w\d.* ]{1,},[^\S][\w\d.* ]{1,}$" minlength="5" required>
+                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d./*]{1,},[^\S][\w\d./* ]{1,},[^\S][\w\d./* ]{1,}$" minlength="5" required>
                                       </div>
                                     </center>
                                 </div>
