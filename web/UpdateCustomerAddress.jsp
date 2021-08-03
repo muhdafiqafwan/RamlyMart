@@ -169,7 +169,7 @@
                                             <small>Example: "No.1, Street, Area"</small>
                                             <c:set var = "fullAddress" value="<%=cust.getCustAddress()%>"/>
                                             <c:set var="addressLine" value="${fn:split(fullAddress, ',')}" />
-                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d./*]{1,},[^\S][\w\d./* ]{1,},[^\S][\w\d./* ]{1,}$" minlength="5" value="<c:out value="${addressLine[0]}"/><c:out value="${','}"/><c:out value="${addressLine[1]}"/><c:out value="${','}"/><c:out value="${addressLine[2]}"/>" required>
+                                            <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d./*]{1,},[^\S][\w\d./* ]{1,},[^\S][\w\d./* ]{1,}$"  minlength="5" value="<c:out value="${addressLine[0]}"/><c:out value="${','}"/><c:out value="${addressLine[1]}"/><c:out value="${','}"/><c:out value="${addressLine[2]}"/>" required>
                                             <br>	
                                         </div>
                                     </div>
