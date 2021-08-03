@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="row" align="center">
                                     <br>
-                                    <input type="reset" value="Reset">   <input type="submit" value="Login" onclick="formValidation()">
+                                    <input type="submit" value="Reset" onclick="formValidation()">
                                 </div>
                             </form>
                             <c:set var="message" value="${requestScope.failResetPassword}"/> 
