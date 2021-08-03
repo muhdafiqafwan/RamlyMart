@@ -79,7 +79,7 @@
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec2">
-                            <form name="form1" method="post" id="ff" action="PaymentController?action=updatePay">
+                            <form id="ff" name="form1" method="post" action="PaymentController?action=updatePay">
                                 <div class="row">
                                     <div class="col-25">
                                         <label>Order ID</label>
@@ -143,21 +143,10 @@
                                     <br>		   
                                 </div>
                                 <div class="row" align="center">
-                                    <a href="PaymentController?action=listPayment" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>    <input type="submit" value="Update" class="btn btn-success" onclick="showAlertSuccessfulUpdate()">
+                                    <a href="PaymentController?action=listPayment" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>    
+                                    <input type="submit" value="Update" class="btn btn-success">
                                 </div>
                             </form>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script>
-                                function showAlertSuccessfulUpdate() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Payment status update successfully',
-                                        showConfirmButton: false,
-                                        timer: 2500
-                                    });
-                                }
-                            </script>
                         </div>
                         <!-- //first section -->
                     </div>

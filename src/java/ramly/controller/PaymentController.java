@@ -98,6 +98,7 @@ public class PaymentController extends HttpServlet {
             payment = daoPayment.getPaymentById(payID);
             forward = LIST_PAYMENT;
             request.setAttribute("payments", daoPayment.getAllPayment());
+            request.setAttribute("successUpdatePayment", "Successfully Update Payment");
         }
         else if(action.equalsIgnoreCase("searchID")) { //SEARCH BY ORDERID
             String searchorder = request.getParameter("searchOrder");

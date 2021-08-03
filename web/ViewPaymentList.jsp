@@ -140,6 +140,19 @@
                                     </c:otherwise>
                                 </c:choose>
                             </table>
+                            <c:set var="message" value="${requestScope.successUpdatePayment}"/> 
+                            <c:if test="${message != null}">        
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Update Payment',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
                             <c:set var="message" value="${requestScope.successDeletePayment}"/> 
                             <c:if test="${message != null}">        
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
