@@ -50,7 +50,7 @@
                 border-radius: 4px;
                 resize: vertical;
             }
-            input[type=text] {
+            input[type=tel] {
                 width: 100%;
                 padding: 12px;
                 border: 1px solid #ccc;
@@ -149,7 +149,7 @@
                                     <div style="background-color: #f9f9f9">
                                     <br>
                                     <p style=" color: #000; font-weight: 600"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Delivery Address </p>
-                                    <form method="post" action="CustomerController?action=UpdateCustomerAddress&total=${totalprice}" onsubmit="showAlertSuccessfulUpdate()">
+                                    <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="CustomerController?action=UpdateCustomerAddress&total=${totalprice}">
                                     <input type="text" name="custID" id="custID" value="<%=cust.getCustID()%>" readonly hidden><br>
                                     <div class="row">
                                         <div class="col-25">
@@ -157,7 +157,7 @@
                                         </div>
                                         <div class="col-75">
                                             <small>Example: "012-3456789" | Maximum 10 digits</small>
-                                            <input type="text" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required>
+                                            <input type="tel" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required>
                                             <br>	
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                                         </div>
                                         <div class="col-75">
                                             <small>Example: "No.1, Street, Area"</small>
-                                            <c:set var="fullAddress" value="<%=cust.getCustAddress()%>"/>
+                                            <c:set var = "fullAddress" value="<%=cust.getCustAddress()%>"/>
                                             <c:set var="addressLine" value="${fn:split(fullAddress, ',')}" />
                                             <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d.*]{1,},[^\S][\w\d.* ]{1,},[^\S][\w\d.* ]{1,}$" minlength="5" value="<c:out value="${addressLine[0]}"/><c:out value="${','}"/><c:out value="${addressLine[1]}"/><c:out value="${','}"/><c:out value="${addressLine[2]}"/>" required>
                                             <br>	
@@ -218,7 +218,7 @@
                                     <center>
                                         <br><br>
                                         <a href="OrderController?action=createOrder&total=${totalprice}" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                        <input type="submit" value="Update" class="btn btn-success" onclick="formValidation()">
+                                        <input type="submit" value="Update" onclick="formValidation()" class="btn btn-success">
                                         <br><br>
                                     </center>
                                 </form>
@@ -226,27 +226,6 @@
                             </div>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function formValidation() {
-                                    var phone = document.getElementById("custPhone");
-                                    var phoneValidity = phone.validity;
-
-                                    if(phoneValidity.valueMissing) {
-                                        phone.setCustomValidity("Please fill out this field!");
-                                    }
-                                    else if(phoneValidity.patternMismatch) {
-                                        phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx");
-                                    }
-                                    else if(phoneValidity.tooLong) {
-                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
-                                    }
-                                    else if(phoneValidity.tooShort) {
-                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
-                                    }
-                                    else {
-                                        phone.setCustomValidity("");
-                                    }
-                                    phone.reportValidity();
-                                }
                                 function showAlertSuccessfulUpdate() {
                                     Swal.fire({
                                         position: 'top-center',

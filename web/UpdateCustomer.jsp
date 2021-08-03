@@ -111,7 +111,7 @@
                     <br>
                     <div class="card">
                         <div class="card-body">        
-                            <form method="post" action="CustomerController?action=updateCustomer">
+                            <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="CustomerController?action=updateCustomer">
                                 <center>
                                     <div class="row">
                                         <div class="col-25">
@@ -126,11 +126,7 @@
                                             <label for="name">Name :</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <input type="text" name="custName" pattern="[a-zA-Z ]+" id="custName" value="<%=cust.getCustName()%>" required><br>	
-=======
-                                            <input type="text" id="custName" name="custName" pattern="[a-zA-Z ]+" value="<%=cust.getCustName()%>" required><br>	
->>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="row">
@@ -138,12 +134,8 @@
                                             <label for="name">No. Phone:</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <small>Example: "012-3456789" | Maximum 10 digits</small>
                                             <input type="tel" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required><br>	
-=======
-                                            <input type="text" id="custPhone" name="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required><br>	
->>>>>>> Stashed changes
                                         </div>
                                      </div>  
                                     <div class="row">
@@ -151,7 +143,6 @@
                                             <label for="name">Email :</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <input type="email" name="custEmail" id="custEmail" value="<%=cust.getCustEmail()%>" readonly><br>	
                                         </div>
                                     </div>
@@ -184,9 +175,6 @@
                                         <div class="col-75">
                                             <input type="text" id="custCity" name="custCity" pattern="^\S\D*$" minlength="4" value="<c:out value="${postcodecity[1]}"/>" required>
                                             <br>	
-=======
-                                            <input type="text" id="custEmail" name="custEmail" value="<%=cust.getCustEmail()%>" readonly><br>	
->>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="row">
@@ -217,11 +205,7 @@
                                             <label for="name">Username :</label>
                                         </div>	
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <input type="text" name="custUsername" pattern="[A-Za-z]+" id="custUsername" value="<%=cust.getCustUsername()%>" required><br>	
-=======
-                                            <input type="text" id="custUsername" name="custUsername" pattern="[A-Za-z]+" value="<%=cust.getCustUsername()%>" required><br>	
->>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="row">
@@ -229,27 +213,14 @@
                                             <label for="name">Password :</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <small>Example: "Aliabu123" | Mininum 6 characters</small>
                                             <input type="password" name="custPassword" id="custPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=cust.getCustPassword()%>" required><br>	
-=======
-                                            <input type="password" id="custPassword" name="custPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" value="<%=cust.getCustPassword()%>" required><br>	
->>>>>>> Stashed changes
                                         </div>
                                     </div>
                                 </center>
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                 </div>
-<<<<<<< Updated upstream
-=======
-                                <center>
-                                    <br><br>
-                                    <a href="CustomerController?action=viewCustomer&id=<%=cust.getCustID()%>" class="btn btn-warning" style="font-size:17px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                                    <input type="submit" value="Update" class="btn btn-success" style="font-size:17px;" onclick="formValidation()">
-                                    <br><br>
-                                </center>
->>>>>>> Stashed changes
                             </form>
                             <center>
                                 <br><br>
@@ -259,78 +230,14 @@
                             </center> 
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function formValidation() {
-                                    var name = document.getElementById("custName");
-                                    var nameValidity = name.validity;
-                                    var phone = document.getElementById("custPhone");
-                                    var phoneValidity = phone.validity;
-                                    var address = document.getElementById("custAddress");
-                                    var addressValidity = address.validity;
-                                    var username = document.getElementById("custUsername");
-                                    var usernameValidity = username.validity;
-                                    var password = document.getElementById("custPassword");
-                                    var passwordValidity = password.validity;
-
-                                    if(nameValidity.valueMissing) {
-                                        name.setCustomValidity("Please fill out this field!");
-                                    }
-                                    else if(nameValidity.patternMismatch) {
-                                        name.setCustomValidity("Must be letters only!");
-                                    }
-                                    else {
-                                        name.setCustomValidity("");
-                                    }
-                                    
-                                    if(phoneValidity.valueMissing) {
-                                        phone.setCustomValidity("Please fill out this field!");
-                                    }
-                                    else if(phoneValidity.patternMismatch) {
-                                        phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx");
-                                    }
-                                    else if(phoneValidity.tooLong) {
-                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
-                                    }
-                                    else if(phoneValidity.tooShort) {
-                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
-                                    }
-                                    else {
-                                        phone.setCustomValidity("");
-                                    }                                   
-                                    
-                                    if(addressValidity.valueMissing) {
-                                        address.setCustomValidity("Please fill out this field!");
-                                    }
-                                    else {
-                                        address.setCustomValidity("");
-                                    }
-                                    
-                                    if(usernameValidity.valueMissing) {
-                                        username.setCustomValidity("Please fill out this field!");
-                                    }
-                                    else if(usernameValidity.patternMismatch) {
-                                        username.setCustomValidity("Must be letters only!");
-                                    }
-                                    else {
-                                        username.setCustomValidity("");
-                                    }
-                                    
-                                    if(passwordValidity.valueMissing) {
-                                        password.setCustomValidity("Please fill out this field!");
-                                    } 
-                                    else if(passwordValidity.patternMismatch) {
-                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
-                                    }
-                                    else if(passwordValidity.tooShort) {
-                                        password.setCustomValidity("Password entered subceeds 6 digits!");
-                                    }
-                                    else {
-                                        password.setCustomValidity("");
-                                    }
-                                    name.reportValidity();
-                                    phone.reportValidity();
-                                    address.reportValidity();
-                                    username.reportValidity();
-                                    password.reportValidity();
+                                function showAlertSuccessfulUpdate() {
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Profile update successfully',
+                                        showConfirmButton: false,
+                                        timer: 4500
+                                    });
                                 }
                                 function showPassword() {
                                     var x = document.getElementById("custPassword")
@@ -482,4 +389,4 @@
         <!-- //for bootstrap working -->
         <!-- //js-files -->
     </body>
-</html>`
+</html>
