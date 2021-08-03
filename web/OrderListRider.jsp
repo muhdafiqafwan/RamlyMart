@@ -33,10 +33,6 @@
         }
     %>
     <body>
-        <c:set var="order" value="${requestScope.orders}"/>
-        <c:if test="${order.isEmpty()}">  
-            <body onload="showAlert()"></body>
-        </c:if>
         <!-- header-bot-->
         <%@ include file="RiderNav.jsp" %>
 	<!-- //header-bot -->
@@ -69,7 +65,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${orders}" var="order">
+                                    <c:forEach var="order" items="${orders}">
                                         <c:choose>
                                             <c:when test="${order.orderStatus.equalsIgnoreCase('Delivering')}">
                                                 <tr>
@@ -85,24 +81,35 @@
                                                 </tr>
                                             </c:when>
                                             <c:otherwise>
-                                                <body onload="showAlert()"></body>
+                                                <tr>
+                                                    <td><c:out value="${order.orderID}" /></td>                                   
+                                                    <td><c:out value="${order.orderStatus}" /></td>
+                                                    <td>RM<c:out value="${order.orderTotalPrice}" /></td>
+                                                    <td><c:out value="${order.orderDeliveryDate}" /></td> 
+                                                    <td><c:out value="${order.orderDeliveryTime}" /></td>
+                                                    <td>
+                                                        <a href="OrderController?action=viewOrderRider&id=${order.orderID}"><button class="btn btn-info">View</button></a> 
+                                                        <a href="OrderController?action=updateOrderRider&id=${order.orderID}"><button class="btn btn-warning" disabled>Update</button></a>
+                                                    </td>
+                                                </tr>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                            <script>
-                                function showAlert() {
+                            <c:set var="message" value="${requestScope.orders}"/>
+                            <c:if test="${message.isEmpty()}">  
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
                                     Swal.fire({
                                         position: 'top-center',
                                         icon: 'warning',
-                                        title: 'No orders to display',
+                                        title: 'No Orders To Display',
                                         showConfirmButton: false,
-                                        timer: 5000
+                                        timer: 3000
                                     });
-                                }
-                            </script>
+                                </script>
+                            </c:if>
                         </div>
                         <!-- //first section -->
                     </div>

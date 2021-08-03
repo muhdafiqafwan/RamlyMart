@@ -173,12 +173,15 @@ public class OrderController extends HttpServlet {
             daoOrder.updateOrder(order);
             daoRider.updateRiderStatus(riderID);
             Rider rider = daoRider.getRiderById(riderID);
+//            forward = ORDER_LIST_RIDER;
             forward = "ManageRiderStatus.jsp";
 //            request.setAttribute("order", daoOrder.getOrderById(orderID));
 //            request.setAttribute("carts", daoCart.getAllCart(orderID));
 //            request.setAttribute("customer", daoCustomer.getCustomerByOrder(orderID));
             HttpSession session = request.getSession();
             session.setAttribute("login", rider);
+//            request.setAttribute("orders", daoOrder.getAllOrderRider(riderID));
+            request.setAttribute("successUpdateOrderStatus", "Order Has Been Delivered");
         }
         else if (action.equalsIgnoreCase("updateOrderAdmin")) { //ADMIN UPDATES CUSTOMERS' ORDER STATUS	
             int orderID = Integer.parseInt(request.getParameter("orderID"));

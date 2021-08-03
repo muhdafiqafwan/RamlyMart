@@ -174,7 +174,7 @@
                                         id.setCustomValidity("Please fill out this field!");
                                     }
                                     else if(idValidity.patternMismatch) {
-                                        id.setCustomValidity("Must be digits only!");
+                                        id.setCustomValidity("Must be 3 digits!");
                                     }
                                     else {
                                         id.setCustomValidity("");
