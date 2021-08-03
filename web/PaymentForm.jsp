@@ -105,7 +105,7 @@
                             <p>Bank: Maybank</p>
                             <p>Name: Ramly Halal Mart SDN BHD</p>
                             <p>Account No: 12345678910101</p>
-                            <form name="paymentForm" method="post" id="ff" action="OrderController?action=checkoutOnline" enctype="multipart/form-data">
+                            <form id="ff" name="paymentForm" method="post" action="OrderController?action=checkoutOnline" enctype="multipart/form-data">
                                 <div class="table-responsive">
                                     <table class="timetable_pay">
                                         <tr>
@@ -179,13 +179,6 @@
                                    confirmButtonText: 'Yes'
                                  }).then((result) => {
                                    if (result.isConfirmed) {
-                                         Swal.fire({
-                                         position: 'top-center',
-                                         icon: 'success',
-                                         title: 'Order has been placed',
-                                         showConfirmButton: false,
-                                         timer: 2500
-                                         });
                                      $(this).unbind('submit').submit()
                                    }
                                  })

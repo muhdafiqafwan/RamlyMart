@@ -103,6 +103,19 @@
                                     </tr>
                                 </c:forEach>	  
                             </table>
+                            <c:set var="message" value="${requestScope.successPayOrder}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Order Has Been Placed',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                        });
+                                </script>
+                            </c:if> 
                         </div>
                         <!-- //first section -->
                     </div>

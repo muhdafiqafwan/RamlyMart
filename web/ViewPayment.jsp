@@ -135,7 +135,7 @@
                                 <div id="COD" class="tab-pane fade">
                                     <h3 class="agileinfo_sign">Cash On Delivery</h3>
                                     <h4><b><ins>Instruction</ins></b></h4>
-                                    <form name="codForm" method="post" id="ff" action="OrderController?action=checkout">
+                                    <form id="ff" name="codForm" method="post" action="OrderController?action=checkout">
                                         <ol>
                                             <li>Extra charge for delivery order <strong>RM5.00</strong></li>
                                             <li>Confirmation can <strong>only make once</strong>. Please check your item details before proceed.</li>
@@ -198,13 +198,6 @@
                                confirmButtonText: 'Yes'
                              }).then((result) => {
                                if (result.isConfirmed) {
-                                     Swal.fire({
-                                     position: 'top-center',
-                                     icon: 'success',
-                                     title: 'Order has been placed',
-                                     showConfirmButton: false,
-                                     timer: 2500
-                                     });
                                  $(this).unbind('submit').submit()
                                }
                              })

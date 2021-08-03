@@ -243,6 +243,7 @@ public class OrderController extends HttpServlet {
             }
             forward = TRACK_ORDER;
             request.setAttribute("orders", daoOrder.getAllCustOrder(custID));
+            request.setAttribute("successPayOrder", "Order Has Been Placed");
         }
         else if (action.equalsIgnoreCase("checkoutOnline")){ //ONLINE PAYMENT CHECKOUT
             InputStream inputStream = null;
@@ -308,6 +309,7 @@ public class OrderController extends HttpServlet {
             }
             forward = TRACK_ORDER;
             request.setAttribute("orders", daoOrder.getAllCustOrder(custID));
+            request.setAttribute("successPayOrder", "Order Has Been Placed");
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
