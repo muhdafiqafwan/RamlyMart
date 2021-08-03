@@ -140,6 +140,19 @@
                                     </c:otherwise>
                                 </c:choose>
                             </table>
+                            <c:set var="message" value="${requestScope.successDeletePayment}"/> 
+                            <c:if test="${message != null}">        
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Payment Has Been Deleted',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                             <script>
@@ -171,13 +184,6 @@
                                         confirmButtonText: 'Yes'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            Swal.fire({
-                                                position: 'top-center',
-                                                icon: 'success',
-                                                title: 'Payment Has Been Deleted',
-                                                showConfirmButton: false,
-                                                timer: 4500
-                                            });
                                             window.location.href = event.target.offsetParent.children[2].href;
                                         }
                                     })
