@@ -109,7 +109,7 @@
                     <br>
                     <div class="card">
                         <div class="card-body">           
-                            <form name="form1" method="post" id="ff" onsubmit="showAlertSuccessfulUpdate()" action="RiderController?action=updateRider">
+                            <form method="post" action="RiderController?action=updateRider">
                                 <center>
                                     <div class="row">
                                         <div class="col-25">
@@ -166,120 +166,111 @@
                                 <div class="row">
                                     <input type="checkbox" onclick="showPassword()">Show Password
                                 </div>
-                            </form>
                                 <center>
                                     <br><br>
-                                    <button style="font-size: 17px;" onclick="history.back();" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-                                    <input style="font-size: 17px;" type="submit" form="ff" value="Update" onclick="formValidation()" class="btn btn-success"> 
+                                    <a href="RiderController?action=viewRider&id=<%=rider.getRiderID()%>" class="btn btn-warning" style="font-size: 17px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                                    <input type="submit" value="Update" class="btn btn-success" style="font-size: 17px;" onclick="formValidation()"> 
                                     <br><br>
                                 </center>
+                            </form>
+                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                            <script>
+                                function formValidation() {
+                                    var name = document.getElementById("riderName");
+                                    var nameValidity = name.validity;
+                                    var phone = document.getElementById("riderPhone");
+                                    var phoneValidity = phone.validity;
+                                    var email = document.getElementById("riderEmail");
+                                    var emailValidity = email.validity;
+                                    var plateNumber = document.getElementById("riderPlate");
+                                    var plateNumberValidity = plateNumber.validity;
+                                    var password = document.getElementById("riderPassword");
+                                    var passwordValidity = password.validity;
+
+                                    if(nameValidity.valueMissing) {
+                                        name.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(nameValidity.patternMismatch) {
+                                        name.setCustomValidity("Must be letters only!");
+                                    }
+                                    else {
+                                        name.setCustomValidity("");
+                                    }
+
+                                    if(phoneValidity.valueMissing) {
+                                        phone.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(phoneValidity.patternMismatch) {
+                                        phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx ");
+                                    }
+                                    else if(phoneValidity.tooLong) {
+                                        phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
+                                    }
+                                    else if(phoneValidity.tooShort) {
+                                        phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
+                                    }
+                                    else {
+                                        phone.setCustomValidity("");
+                                    }
+
+                                    if(emailValidity.valueMissing) {
+                                        email.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(emailValidity.patternMismatch) {
+                                        email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
+                                    }
+                                    else {
+                                        email.setCustomValidity('');
+                                    }
+
+                                    if(plateNumberValidity.valueMissing) {
+                                        plateNumber.setCustomValidity("Please fill out this field!");
+                                    }
+                                    else if(plateNumberValidity.patternMismatch) {
+                                        plateNumber.setCustomValidity("Must contain 3 uppercase letters, 4 digits and no spacing!");
+                                    }
+                                    else if(plateNumberValidity.tooLong) {
+                                        plateNumber.setCustomeValidity("Plate number entered exceeds 7 digits!");
+                                    }
+                                    else if(plateNumberValidity.tooShort) {
+                                        plateNumber.setCustomeValidity("Plate number entered subceeds 7 digits!");
+                                    }
+                                    else {
+                                        plateNumber.setCustomValidity("");
+                                    }
+
+                                    if(passwordValidity.valueMissing) {
+                                        password.setCustomValidity("Please fill out this field!");
+                                    } 
+                                    else if(passwordValidity.patternMismatch) {
+                                        password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
+                                    }
+                                    else if(passwordValidity.tooShort) {
+                                        password.setCustomValidity("Password entered subceeds 6 digits!");
+                                    }
+                                    else {
+                                        password.setCustomValidity("");
+                                    }
+                                    name.reportValidity();
+                                    phone.reportValidity();
+                                    email.reportValidity();
+                                    plateNumber.reportValidity();
+                                    password.reportValidity();
+                                }
+                                function showPassword() {
+                                    var password = document.getElementById("riderPassword")
+
+                                    if(password.type === "password") {
+                                        password.type = "text";
+                                    }
+                                    else {
+                                        password.type = "password";
+                                    }
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>                
-                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                <script>
-                    function showAlertSuccessfulUpdate() {
-                        Swal.fire({
-                            position: 'top-center',
-                            icon: 'success',
-                            title: 'Profile update successfully',
-                            showConfirmButton: false,
-                            timer: 4500
-                        });
-                    }
-                    function showPassword() {
-                        var x = document.getElementById("riderPassword")
-
-                        if(x.type === "password") {
-                            x.type = "text";
-                        }
-                        else {
-                            x.type = "password";
-                        }
-                    }
-                    function formValidation() {
-                        var name = document.getElementById("riderName");
-                        var nameValidity = name.validity;
-                        var phone = document.getElementById("riderPhone");
-                        var phoneValidity = phone.validity;
-                        var email = document.getElementById("riderEmail");
-                        var emailValidity = email.validity;
-                        var plateNumber = document.getElementById("riderPlate");
-                        var plateNumberValidity = plateNumber.validity;
-                        var password = document.getElementById("riderPassword");
-                        var passwordValidity = password.validity;
-
-                        if(nameValidity.valueMissing) {
-                            name.setCustomValidity("Please fill out this field!");
-                        }
-                        else if(nameValidity.patternMismatch) {
-                            name.setCustomValidity("Must be letters only!");
-                        }
-                        else {
-                            name.setCustomValidity("");
-                        }
-
-                        if(phoneValidity.valueMissing) {
-                            phone.setCustomValidity("Please fill out this field!");
-                        }
-                        else if(phoneValidity.patternMismatch) {
-                            phone.setCustomValidity("Must contain 10 digits, has dash (-) character and please use the correct format! Example: xxx-xxxxxxx ");
-                        }
-                        else if(phoneValidity.tooLong) {
-                            phone.setCustomeValidity("Phone number entered exceeds 11 digits!");
-                        }
-                        else if(phoneValidity.tooShort) {
-                            phone.setCustomeValidity("Phone number entered subceeds 11 digits!");
-                        }
-                        else {
-                            phone.setCustomValidity("");
-                        }
-
-                        if(emailValidity.valueMissing) {
-                            email.setCustomValidity("Please fill out this field!");
-                        }
-                        else if(emailValidity.patternMismatch) {
-                            email.setCustomValidity("Please use the correct format! Example: xxxx@gmail.com");
-                        }
-                        else {
-                            email.setCustomValidity('');
-                        }
-
-                        if(plateNumberValidity.valueMissing) {
-                            plateNumber.setCustomValidity("Please fill out this field!");
-                        }
-                        else if(plateNumberValidity.patternMismatch) {
-                            plateNumber.setCustomValidity("Must contain 3 uppercase letters, 4 digits and no spacing!");
-                        }
-                        else if(plateNumberValidity.tooLong) {
-                            plateNumber.setCustomeValidity("Plate number entered exceeds 7 digits!");
-                        }
-                        else if(plateNumberValidity.tooShort) {
-                            plateNumber.setCustomeValidity("Plate number entered subceeds 7 digits!");
-                        }
-                        else {
-                            plateNumber.setCustomValidity("");
-                        }
-
-                        if(passwordValidity.valueMissing) {
-                            password.setCustomValidity("Please fill out this field!");
-                        } 
-                        else if(passwordValidity.patternMismatch) {
-                            password.setCustomValidity("Must contain a digit, a lowercase letter, a uppercase letter and at least 6 characters!");
-                        }
-                        else if(passwordValidity.tooShort) {
-                            password.setCustomValidity("Password entered subceeds 6 digits!");
-                        }
-                        else {
-                            password.setCustomValidity("");
-                        }
-                        name.reportValidity();
-                        phone.reportValidity();
-                        email.reportValidity();
-                        plateNumber.reportValidity();
-                        password.reportValidity();
-                    }
-                </script>
             </div>
         </div>       
 	<!-- js-files -->

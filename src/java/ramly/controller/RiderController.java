@@ -49,7 +49,7 @@ public class RiderController extends HttpServlet {
             request.setAttribute("rider", rider); 
         } 
         else if (action.equalsIgnoreCase("viewRider")) { //RIDER VIEWS PROFILE
-            int id = Integer.parseInt(request.getParameter("riderID"));
+            int id = Integer.parseInt(request.getParameter("id"));
             Rider rider = daoRider.getRiderById(id);        	
             forward = VIEW_RIDER;       		
             request.setAttribute("rider", rider);        	
@@ -122,6 +122,7 @@ public class RiderController extends HttpServlet {
             session.setAttribute("login", rider);
             forward = VIEW_RIDER;
             request.setAttribute("rider", rider); 
+            request.setAttribute("successUpdateProfile", "Successfully Update Profile"); 
         }
         else if(action.equalsIgnoreCase("manageStatus")) { //RIDER MANAGES STATUS
             int riderID = Integer.parseInt(request.getParameter("riderID"));
