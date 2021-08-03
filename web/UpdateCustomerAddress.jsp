@@ -156,9 +156,8 @@
                                             <label for="subject">Phone No. :</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <small>Example: "012-3456789" | Maximum 10 digits</small>
-                                            <input type="tel" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required>
+                                            <input type="text" name="custPhone" id="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required>
                                             <br>	
                                         </div>
                                     </div>
@@ -168,12 +167,9 @@
                                         </div>
                                         <div class="col-75">
                                             <small>Example: "No.1, Street, Area"</small>
-                                            <c:set var = "fullAddress" value="<%=cust.getCustAddress()%>"/>
+                                            <c:set var="fullAddress" value="<%=cust.getCustAddress()%>"/>
                                             <c:set var="addressLine" value="${fn:split(fullAddress, ',')}" />
                                             <input type="text" id="custAddress" name="custAddress" pattern="^[\w\d.*]{1,},[^\S][\w\d.* ]{1,},[^\S][\w\d.* ]{1,}$" minlength="5" value="<c:out value="${addressLine[0]}"/><c:out value="${','}"/><c:out value="${addressLine[1]}"/><c:out value="${','}"/><c:out value="${addressLine[2]}"/>" required>
-=======
-                                            <textarea id="custAddress" name="custAddress" required><%=cust.getCustAddress()%></textarea>
->>>>>>> Stashed changes
                                             <br>	
                                         </div>
                                     </div>
@@ -192,7 +188,6 @@
                                             <label for="subject">City :</label>
                                         </div>
                                         <div class="col-75">
-<<<<<<< Updated upstream
                                             <input type="text" id="custCity" name="custCity" pattern="^\S\D*$" minlength="4" value="<c:out value="${postcodecity[1]}"/>" required>
                                             <br>	
                                         </div>
@@ -217,20 +212,13 @@
                                                 <option value="Selangor" <c:if test="${addressLine[4].equalsIgnoreCase(' Selangor')}">selected</c:if>>Selangor</option>
                                                 <option value="Terengganu" <c:if test="${addressLine[4].equalsIgnoreCase(' Terengganu')}">selected</c:if>>Terengganu</option>
                                             </select>
-=======
-                                            <input type="text" id="custPhone" name="custPhone" pattern="[0-9]{3}-[0-9]{7}" minlength="11" maxlength="11" value="<%=cust.getCustPhone()%>" required>
->>>>>>> Stashed changes
                                             <br>	
                                         </div>
                                     </div>
                                     <center>
                                         <br><br>
                                         <a href="OrderController?action=createOrder&total=${totalprice}" class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-<<<<<<< Updated upstream
-                                        <input type="submit" value="Update" onclick="formValidation()" class="btn btn-success">
-=======
                                         <input type="submit" value="Update" class="btn btn-success" onclick="formValidation()">
->>>>>>> Stashed changes
                                         <br><br>
                                     </center>
                                 </form>
