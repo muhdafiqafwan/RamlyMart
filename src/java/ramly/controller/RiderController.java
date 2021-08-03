@@ -94,12 +94,12 @@ public class RiderController extends HttpServlet {
             if(!rider.isValid()) {
                 daoRider.add(rider);
                 forward = LOGIN_RIDER;
-                request.setAttribute("success", "Register Successful");
+                request.setAttribute("successRegister", "Successfully Register Account");
             }
             else {
                 daoRider.updateRider(rider);		
                 forward = REGISTER_RIDER;
-                request.setAttribute("fail", "Email/Plate Number Has Been Used");
+                request.setAttribute("failRegister", "Email/Plate Number Has Been Used");
             }
         }
         else if(action.equalsIgnoreCase("updateRider")) { //RIDER UPDATES PROFILE

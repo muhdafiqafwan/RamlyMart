@@ -55,7 +55,7 @@
                                     <p>Lets get some work done!</p>
                                 </div>
                             </center>
-                            <c:set var="message" value="${requestScope.in}"/> 
+                            <c:set var="message" value="${requestScope.successLogin}"/> 
                             <c:if test="${message != null}">    
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
@@ -64,7 +64,7 @@
                                         icon: 'success',
                                         title: 'Successfully Login',
                                         showConfirmButton: false,
-                                        timer: 2500
+                                        timer: 3000
                                     });
                                 </script>
                             </c:if>

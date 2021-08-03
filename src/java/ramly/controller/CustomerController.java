@@ -116,7 +116,7 @@ public class CustomerController extends HttpServlet {
             if(!customer.isValid()) {
                 daoCustomer.add(customer);
                 forward = LOGIN_CUSTOMER;
-                request.setAttribute("successRegister", "Register Successful");
+                request.setAttribute("successRegister", "Successfully Register Account");
             }
             else {
                 daoCustomer.updateCustomer(customer);

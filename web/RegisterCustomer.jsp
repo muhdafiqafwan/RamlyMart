@@ -395,7 +395,7 @@
                                             icon: 'error',
                                             title: 'Password Did Not Match!',
                                             showConfirmButton: true,
-                                            timer: 4500
+                                            timer: 3000
                                         });
                                        return false; 
                                     }

@@ -20,6 +20,7 @@ public class LoginController extends HttpServlet {
     private String LOGIN_ADMIN = "LoginAdmin.jsp"; 
     private String HOMEPAGE_RIDER = "HomepageRider.jsp";
     private String LOGIN_RIDER = "LoginRider.jsp"; 
+    private String FORGOTPASSWORD_RIDER = "ForgotPasswordRider.jsp"; 
     private String HOMEPAGE_CUSTOMER = "HomepageCustomer.jsp";
     private String LOGIN_CUSTOMER = "LoginCustomer.jsp"; 
     private String FORGOTPASSWORD_CUSTOMER = "ForgotPasswordCustomer.jsp"; 
@@ -40,21 +41,19 @@ public class LoginController extends HttpServlet {
         String action = request.getParameter("action");
         
         if(action.equalsIgnoreCase("loginCustomer")) { 
-            try (PrintWriter out = response.getWriter()) {
-                String custUsername = request.getParameter("custUsername");
-                String custPassword = request.getParameter("custPassword");
-                Customer customer = daoCustomer.login(custUsername, custPassword);
+            String custUsername = request.getParameter("custUsername");
+            String custPassword = request.getParameter("custPassword");
+            Customer customer = daoCustomer.login(custUsername, custPassword);
 
-                if(customer != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("login", customer);
-                    request.setAttribute("successLogin","Successfully Login");
-                    forward = HOMEPAGE_CUSTOMER;
-                }
-                else {
-                    request.setAttribute("failLogin", "User Not Found!");
-                    forward = LOGIN_CUSTOMER;
-                }
+            if(customer != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("login", customer);
+                request.setAttribute("successLogin","Successfully Login");
+                forward = HOMEPAGE_CUSTOMER;
+            }
+            else {
+                request.setAttribute("failLogin", "User Not Found!");
+                forward = LOGIN_CUSTOMER;
             }
         }
         else if(action.equalsIgnoreCase("resetPasswordCustomer")) {
@@ -63,7 +62,7 @@ public class LoginController extends HttpServlet {
             check = daoCustomer.resetPassword(custEmail, custPassword);
             
             if(check) {
-                request.setAttribute("successResetPassword","Reset Password Successful");
+                request.setAttribute("successResetPassword","Successfully Reset Password");
                 forward = LOGIN_CUSTOMER;
             }
             else {
@@ -72,39 +71,49 @@ public class LoginController extends HttpServlet {
             }
         }
         else if(action.equalsIgnoreCase("loginRider")) { 
-            try (PrintWriter out = response.getWriter()) {
-                int riderID = Integer.parseInt(request.getParameter("riderID"));
-                String riderPassword = request.getParameter("riderPassword");
-                Rider rider = daoRider.login(riderID, riderPassword);
+            int riderID = Integer.parseInt(request.getParameter("riderID"));
+            String riderPassword = request.getParameter("riderPassword");
+            Rider rider = daoRider.login(riderID, riderPassword);
 
-                if(rider != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("login", rider);
-                    request.setAttribute("in","Successfully Login");
-                    forward = HOMEPAGE_RIDER;
-                }
-                else {
-                    request.setAttribute("error", "User not found! Please try again");
-                    forward = LOGIN_RIDER;
-                }
+            if(rider != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("login", rider);
+                request.setAttribute("successLogin","Successfully Login");
+                forward = HOMEPAGE_RIDER;
+            }
+            else {
+                request.setAttribute("failLogin", "User Not Found!");
+                forward = LOGIN_RIDER;
+            }
+        }
+        else if(action.equalsIgnoreCase("resetPasswordRider")) {
+            String riderEmail = request.getParameter("riderEmail");
+            String riderPassword = request.getParameter("riderNewPassword1");
+            check = daoRider.resetPassword(riderEmail, riderPassword);
+            
+            if(check) {
+                request.setAttribute("successResetPassword","Successfully Reset Password");
+                forward = LOGIN_RIDER;
+            }
+            else {
+                request.setAttribute("failResetPassword","User Not Found!");
+                forward = FORGOTPASSWORD_RIDER;
             }
         }
         else if(action.equalsIgnoreCase("loginAdmin")) { 
-            try (PrintWriter out = response.getWriter()) {
-                int adminID = Integer.parseInt(request.getParameter("adminID"));
-                String adminPassword = request.getParameter("adminPassword");
-                Admin admin = daoAdmin.login(adminID, adminPassword);
+            int adminID = Integer.parseInt(request.getParameter("adminID"));
+            String adminPassword = request.getParameter("adminPassword");
+            Admin admin = daoAdmin.login(adminID, adminPassword);
 
-                if(admin != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("login", admin);
-                    request.setAttribute("in","Successfully Login");
-                    forward = HOMEPAGE_ADMIN;
-                }
-                else {
-                    request.setAttribute("error", "User not found! Please try again");
-                    forward = LOGIN_ADMIN;
-                }
+            if(admin != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("login", admin);
+                request.setAttribute("in","Successfully Login");
+                forward = HOMEPAGE_ADMIN;
+            }
+            else {
+                request.setAttribute("error", "User not found! Please try again");
+                forward = LOGIN_ADMIN;
             }
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(forward);

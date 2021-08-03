@@ -174,7 +174,7 @@
                                     <input type="reset" value="Reset">   <input type="submit" value="Register" onclick="formValidation()">
                                 </div>                               
                             </form>
-                            <c:set var="message" value="${requestScope.fail}"/> 
+                            <c:set var="message" value="${requestScope.failRegister}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
@@ -184,7 +184,7 @@
                                         title: 'Email/Plate Number Has Been Used!',
                                         text: 'Please try another email or plate number',
                                         showConfirmButton: true,
-                                        timer: 4500
+                                        timer: 3000
                                     });
                                 </script>
                             </c:if>
@@ -282,7 +282,7 @@
                                             icon: 'error',
                                             title: 'Password Did Not Match!',
                                             showConfirmButton: true,
-                                            timer: 4500
+                                            timer: 3000
                                         });
                                        return false; 
                                     }

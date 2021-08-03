@@ -72,7 +72,7 @@
 	<div class="ads-grid">
             <div class="container">
                 <!-- tittle heading -->
-                <h3 class="tittle-w3l">Customer
+                <h3 class="tittle-w3l">Rider
                     <span class="heading-style">
                         <i></i>
                         <i></i>
@@ -86,7 +86,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Reset Password </h3>
-                            <form method="post" action="LoginController?action=resetPasswordCustomer" onsubmit="return passwordComparison()">				  
+                            <form method="post" action="LoginController?action=resetPasswordRider" onsubmit="return passwordComparison()">				  
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="name">Email</label>
@@ -95,7 +95,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="text" id="custEmail" name="custEmail" pattern="[a-z0-9._%+-]+@gmail.com" required>
+                                            <input type="text" id="riderEmail" name="riderEmail" pattern="[a-z0-9._%+-]+@gmail.com" required>
                                         </div>
                                     </center>
                                 </div> 
@@ -107,7 +107,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="custNewPassword1" name="custNewPassword1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required> 
+                                            <input type="password" id="riderNewPassword1" name="riderNewPassword1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" minlength="6" required> 
                                         </div>
                                     </center>
                                 </div>  
@@ -117,7 +117,7 @@
                                     </div>
                                     <center>
                                         <div class="col-75">
-                                            <input type="password" id="custNewPassword2" name="custNewPassword2" required>
+                                            <input type="password" id="riderNewPassword2" name="riderNewPassword2" required>
                                         </div>
                                     </center>
                                 </div>
@@ -147,9 +147,9 @@
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
                                 function formValidation() {
-                                    var email = document.getElementById("custEmail");
+                                    var email = document.getElementById("riderEmail");
                                     var emailValidity = email.validity;
-                                    var password = document.getElementById("custNewPassword1");
+                                    var password = document.getElementById("riderNewPassword1");
                                     var passwordValidity = password.validity;
 
                                     if(emailValidity.valueMissing) {
@@ -178,8 +178,8 @@
                                     password.reportValidity();
                                 }
                                 function passwordComparison() {  
-                                    var password1 = document.getElementById("custNewPassword1").value;  
-                                    var password2 = document.getElementById("custNewPassword2").value;  
+                                    var password1 = document.getElementById("riderNewPassword1").value;  
+                                    var password2 = document.getElementById("riderNewPassword2").value;  
 
                                     if(password1 !== password2)  {                              
                                         Swal.fire({
@@ -194,8 +194,8 @@
                                     return true;
                                 }
                                 function showPassword() {
-                                    var password1 = document.getElementById("custNewPassword1");
-                                    var password2 = document.getElementById("custNewPassword2");
+                                    var password1 = document.getElementById("riderNewPassword1");
+                                    var password2 = document.getElementById("riderNewPassword2");
 
                                     if(password1.type === "password") {
                                         password1.type = "text";

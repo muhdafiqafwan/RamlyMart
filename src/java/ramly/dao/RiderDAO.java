@@ -256,6 +256,34 @@ public class RiderDAO {
             e.printStackTrace();
         }
         return rider;
-    }	
+    }
+    public boolean resetPassword(String riderEmail, String riderPassword) {
+        String email = null;
+        String sql1 = "select RIDEREMAIL from RIDER where RIDEREMAIL = '" + riderEmail + "'";
+
+        try {
+            currentCon = ConnectionManager.getConnection();
+            stmt = currentCon.createStatement();
+            rs = stmt.executeQuery(sql1);
+
+            while(rs.next()) {
+                email = rs.getString("riderEmail");
+            }
+
+            if(email != null) {
+                String sql2 = "Update RIDER set RIDERPASSWORD = '" + riderPassword + "' where RIDERMAIL = '" + riderEmail + "'";
+
+                currentCon = ConnectionManager.getConnection();
+                stmt = currentCon.createStatement();
+                stmt.executeUpdate(sql2);
+                return true;
+            }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 

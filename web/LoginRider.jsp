@@ -118,8 +118,37 @@
                                     <br>
                                     <input type="reset" value="Reset">   <input type="submit" value="Login" onclick="formValidation()">
                                 </div>  
-                            </form>     
-                            <c:set var="message" value="${requestScope.error}"/> 
+                            </form>  
+                            <br>
+                            <p align="center">Forgot password?
+                                <b><a href="ForgotPasswordRider.jsp">Click here</a></b>
+                            </p>
+                            <c:set var="message" value="${requestScope.successRegister}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Register Account',
+                                        showConfirmButton: true,
+                                        timer: 3000
+                                    });
+                                </script>
+                            <c:set var="message" value="${requestScope.successResetPassword}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Reset Password ',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
+                            <c:set var="message" value="${requestScope.failLogin}"/> 
                             <c:if test="${message != null}">      
                                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                                 <script>
@@ -127,25 +156,12 @@
                                         position: 'top-center',
                                         icon: 'error',
                                         title: 'User Not Found!',
-                                        text: 'Please try again',
-                                        showConfirmButton: true,
-                                        timer: 4500
+                                        text: 'Please try another username/password!',
+                                        showConfirmButton: false,
+                                        timer: 3000
                                     });
                                 </script>
                             </c:if>
-                            <c:set var="message" value="${requestScope.success}"/> 
-                            <c:if test="${message != null}">      
-                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                                <script>
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Register Successful',
-                                        text: 'Please contact Ramly management to obtain rider ID',
-                                        showConfirmButton: true,
-                                        timer: 4500
-                                    });
-                                </script>
                             </c:if>
                             <script>
                                 function formValidation() {

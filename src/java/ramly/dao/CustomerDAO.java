@@ -277,7 +277,7 @@ public class CustomerDAO {
             }
 
             if(email != null) {
-                String sql2 = "Update CUSTOMER set CUSTPASSWORD = '" + custPassword + "'";
+                String sql2 = "Update CUSTOMER set CUSTPASSWORD = '" + custPassword + "' where CUSTEMAIL = '" + custEmail + "'";
 
                 currentCon = ConnectionManager.getConnection();
                 stmt = currentCon.createStatement();

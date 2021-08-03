@@ -153,7 +153,7 @@
                                         position: 'top-center',
                                         icon: 'error',
                                         title: 'User Not Found!',
-                                        text: 'Please try another username!',
+                                        text: 'Please try another username/password!',
                                         showConfirmButton: false,
                                         timer: 3000
                                     });
