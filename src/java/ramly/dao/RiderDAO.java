@@ -259,7 +259,7 @@ public class RiderDAO {
     }
     public boolean resetPassword(String riderEmail, String riderPassword) {
         String email = null;
-        String sql1 = "select RIDEREMAIL from RIDER where RIDEREMAIL = '" + riderEmail + "'";
+        String sql1 = "Select riderEmail from rider where riderEmail = '" + riderEmail + "'";
 
         try {
             currentCon = ConnectionManager.getConnection();
@@ -271,7 +271,7 @@ public class RiderDAO {
             }
 
             if(email != null) {
-                String sql2 = "Update RIDER set RIDERPASSWORD = '" + riderPassword + "' where RIDERMAIL = '" + riderEmail + "'";
+                String sql2 = "Update rider set riderPassword = '" + riderPassword + "' where riderEmail = '" + riderEmail + "'";
 
                 currentCon = ConnectionManager.getConnection();
                 stmt = currentCon.createStatement();
