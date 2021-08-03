@@ -76,7 +76,7 @@
                         <!-- first section -->
                         <div class="product-sec2">
                             <h3 class="agileinfo_sign">Add Item</h3>
-                            <form method="post" action="ItemController?action=addItem" class="form-group" onsubmit="showAlertSuccessfulAdd()" enctype="multipart/form-data">
+                            <form method="post" action="ItemController?action=addItem" class="form-group" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="itemName">Item Name: </label>
@@ -158,15 +158,6 @@
                             </form>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showAlertSuccessfulAdd() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Item added successfully',
-                                        showConfirmButton: false,
-                                        timer: 4500
-                                    });
-                                }
                                function formValidation() {
                                     var name = document.getElementById("itemName");
                                     var nameValidity = name.validity;

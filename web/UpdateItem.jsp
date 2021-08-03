@@ -82,7 +82,7 @@
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec2">
-                            <form method="post" onreset="resetImg()" class="form-group" onsubmit="showAlertSuccessfulUpdate()" action="ItemController?action=updateItem" enctype="multipart/form-data">
+                            <form method="post" action="ItemController?action=updateItem" class="form-group" onreset="resetImg()" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="itemName">Item Name: </label>
@@ -168,18 +168,7 @@
                                     <input type="reset" class="btn btn-danger" value="Reset"></input>   <input type="submit"  class="btn btn-success" value="Update" onclick="formValidation()"></input>
                                 </div>
                             </form>
-                            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
-                                function showAlertSuccessfulUpdate() {
-                                    Swal.fire({
-                                        position: 'top-center',
-                                        icon: 'success',
-                                        title: 'Item update successfully',
-                                        showConfirmButton: false,
-                                        timer: 4500
-                                    })
-                                };
-                                
                                 var loadFile = function(event) {
                                 var output = document.getElementById('output');
                                 output.src = URL.createObjectURL(event.target.files[0]);

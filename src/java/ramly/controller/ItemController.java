@@ -54,6 +54,7 @@ public class ItemController extends HttpServlet {
             daoItem.deleteItem(id);
             forward = CATALOGUE;
             request.setAttribute("itemAll", daoItem.getAllItem()); 
+            request.setAttribute("successDeleteItem", "Item Has Been Deleted"); 
 	} 
         else if(action.equalsIgnoreCase("updateItem")) { //ADMIN UPDATE ITEM	
             int  id = Integer.parseInt(request.getParameter("id"));
@@ -99,6 +100,7 @@ public class ItemController extends HttpServlet {
             }
             forward = CATALOGUE;
             request.setAttribute("itemAll", daoItem.getAllItem()); 
+            request.setAttribute("successAddItem", "Successfull Add Item"); 
         }
         else if(action.equalsIgnoreCase("updateItem")) { 
             int itemID = Integer.parseInt(request.getParameter("itemID"));
@@ -120,6 +122,8 @@ public class ItemController extends HttpServlet {
             }
               forward = CATALOGUE;
               request.setAttribute("itemAll", daoItem.getAllItem()); 
+              request.setAttribute("successUpdateItem", "Successfully Update Item"); 
+              
         }
         else if(action.equalsIgnoreCase("searchItem")) { //SEARCH FOR ITEM
             String search = request.getParameter("search");

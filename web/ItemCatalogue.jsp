@@ -97,6 +97,45 @@
                                     </tr>
                                 </c:forEach> 
                             </table>
+                            <c:set var="message" value="${requestScope.successAddItem}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Add Item',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
+                            <c:set var="message" value="${requestScope.successUpdateItem}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Successfully Update Item',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
+                            <c:set var="message" value="${requestScope.successDeleteItem}"/> 
+                            <c:if test="${message != null}">      
+                                <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script>
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Item Has Been Deleted',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                </script>
+                            </c:if>
                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                             <script>
                                 function del(event){
@@ -111,13 +150,6 @@
                                         confirmButtonText: 'Yes'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            Swal.fire({
-                                                position: 'top-center',
-                                                icon: 'success',
-                                                title: 'Item Has Been Deleted',
-                                                showConfirmButton: false,
-                                                timer: 4500
-                                            });
                                             window.location.href = event.target.offsetParent.children[1].href;
                                         }
                                     })
