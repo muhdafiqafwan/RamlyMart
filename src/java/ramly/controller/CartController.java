@@ -204,6 +204,11 @@ public class CartController extends HttpServlet {
                     request.setAttribute("successUpdateItemQuantity","Item Quantity Has been Updated");
                     forward = "CartController?action=viewcart";
                 }
+                else if(quantity > daoItem.getStock(id)) {
+                    daoItem.removeStock(id, amount);
+                    request.setAttribute("failAddItem","Quantity Entered Exceeds Item Stock!");
+                    forward = "CartController?action=viewcart";
+                }
                 else if(quantity == daoItem.getStock(id)) {
                     daoItem.removeStock(id, amount);
                     request.setAttribute("errorAddItem","Item Out Of Stock!");
