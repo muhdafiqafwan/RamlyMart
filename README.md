@@ -9,3 +9,6 @@ Ramly Halal Mart Delivery System is a web-based application system that provides
 - jQuery
 - Bootstrap
 - OracleDB
+
+# Screenshot
+![image](https://user-images.githubusercontent.com/63769862/153016285-f7ea08cd-40c8-467a-bb4a-c65f3dcb68f0.png)
